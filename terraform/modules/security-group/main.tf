@@ -18,6 +18,14 @@ resource "aws_security_group" "spell_it_instance_security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  #Allow http
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   #Allow https
   ingress {
     from_port = 443
