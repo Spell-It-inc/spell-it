@@ -21,4 +21,20 @@ export class AccountController {
       res.status(500).json({ errors: ["Failed to fetch profile"] });
     }
   }
+
+  static async getProfilesByAccountId(req: Request, res: Response) {
+    try {
+      const accountId = parseInt(req.params.id);
+
+      if (isNaN(accountId) || accountId <= 0) {
+        res.status(400).json({ errors: ["Invalid Account ID"] });
+      } else {
+        const profiles = await AccountModel.findProfilesByAccountId(accountId);
+
+        res.json(profiles);
+      }
+    } catch (error) {
+      res.status(500).json({ errors: ["Failed to fetch profile"] });
+    }
+  }
 }
