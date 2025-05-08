@@ -1,13 +1,5 @@
 import { pool } from "../config/database";
-import { QueryResultRow } from "pg";
-
-export interface Profile extends QueryResultRow {
-  profile_id: number;
-  account_id: number;
-  username: string;
-  age_group_id: number;
-  created_at: Date;
-}
+import type { Profile } from "../interfaces/profile";
 
 export class ProfileModel {
   static async findAll(): Promise<Profile[]> {
