@@ -1,18 +1,12 @@
 import type { Request, Response } from "express";
 import { OAuth2Client } from "google-auth-library";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { AccountModel } from "../models/account";
-import type { GoogleLoginRequestBody } from "../interfaces/auth";
+import type { GoogleLoginRequestBody, GooglePayload } from "../interfaces/auth";
 
 dotenv.config();
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-
-interface GooglePayload {
-  sub: string;
-  name?: string;
-}
 
 export class AuthController {
   static async handleGoogleLogin(req: Request, res: Response): Promise<void> {
@@ -44,14 +38,8 @@ export class AuthController {
         console.log("Account created:", account);
       }
 
-      const token = jwt.sign(
-        { accountId: account.account_id, sub: account.auth_sub },
-        process.env.JWT_SECRET as string,
-        { expiresIn: "30m" }
-      );
-
       res.status(200).json({
-        token,
+        idToken,
         accountId: account.account_id,
       });
     } catch (error) {

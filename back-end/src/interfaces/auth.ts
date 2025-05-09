@@ -2,7 +2,7 @@ export interface GoogleLoginRequestBody {
   idToken: string;
 }
 
-export interface JwtPayload {
-  accountId: number;
+export interface GooglePayload {
   sub: string;
+  name?: string;
 }
