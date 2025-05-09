@@ -5,7 +5,7 @@ import { AccountModel } from "../models/account";
 
 dotenv.config();
 
-const client = new OAuth2Client();
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 interface GooglePayload {
   sub: string;
