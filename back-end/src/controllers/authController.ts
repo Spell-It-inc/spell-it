@@ -1,11 +1,20 @@
 import type { Request, Response } from "express";
-import { AuthService } from "../services/authService";
+import { OAuth2Client } from "google-auth-library";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import { AccountModel } from "../models/account";
+
+dotenv.config();
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+interface GooglePayload {
+  sub: string;
+  name?: string;
+}
 
 export class AuthController {
   static async handleGoogleLogin(req: Request, res: Response): Promise<void> {
-    console.log("[POST] /api/auth/signin called");
-    console.log("Request body:", req.body);
-
     const { idToken } = req.body;
 
     if (!idToken) {
@@ -14,10 +23,38 @@ export class AuthController {
     }
 
     try {
-      const result = await AuthService.authenticateWithGoogle(idToken);
-      res.status(200).json(result);
+      const ticket = await client.verifyIdToken({
+        idToken,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+
+      const payload = ticket.getPayload() as GooglePayload;
+
+      if (!payload?.sub) {
+        throw new Error("Invalid token payload");
+      }
+
+      const authSub = payload.sub;
+      console.log("Google payload:", payload);
+
+      let account = await AccountModel.findByAuthSub(authSub);
+      if (!account) {
+        console.log("Creating new account...");
+        account = await AccountModel.create(authSub);
+        console.log("Account created:", account);
+      }
+
+      const token = jwt.sign(
+        { accountId: account.account_id, sub: account.auth_sub },
+        process.env.JWT_SECRET as string,
+        { expiresIn: "1h" }
+      );
+
+      res.status(200).json({
+        token,
+        accountId: account.account_id,
+      });
     } catch (error) {
-      console.error("Authentication failed:", error);
       res.status(401).json({ errors: ["Authentication failed"] });
     }
   }
