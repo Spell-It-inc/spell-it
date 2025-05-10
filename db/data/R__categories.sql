@@ -1,6 +1,6 @@
 TRUNCATE TABLE categories RESTART IDENTITY CASCADE;
 
-INSERT INTO categories (name)
+INSERT INTO categories unique (name)
 VALUES 
   ('Animals'),
   ('Colours'),

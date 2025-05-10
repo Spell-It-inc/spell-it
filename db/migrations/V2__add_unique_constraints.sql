@@ -1,4 +1,5 @@
 ALTER TABLE categories ADD CONSTRAINT uk_categories_category UNIQUE(category_id);
+ALTER TABLE categories ADD CONSTRAINT uk_categories_category UNIQUE(name);
 
 ALTER TABLE words ADD CONSTRAINT uk_words_word UNIQUE(word_id);
 

@@ -1,6 +1,6 @@
 TRUNCATE TABLE words RESTART IDENTITY CASCADE;
 
-INSERT INTO words (category_id, word)
+INSERT INTO words unique (category_id, word)
 VALUES
 (1, 'Lion'), (1, 'Elephant'), (1, 'Tiger'), (1, 'Zebra'), (1, 'Giraffe'),
 (1, 'Monkey'), (1, 'Panda'), (1, 'Kangaroo'), (1, 'Bear'), (1, 'Dolphin'),
