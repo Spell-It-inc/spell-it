@@ -27,9 +27,10 @@ jobs:
       - name: Install dependencies
         run: |
           cd front-end2
-          npm install
+          npm i
           npx tsc
       - name: Sync files to S3 bucket
         run: |
           cd front-end2
+          ls
           aws s3 sync /dist s3://spellit --delete
