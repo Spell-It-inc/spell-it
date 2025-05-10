@@ -31,8 +31,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd front-end2
-          npm i
-          npx tsc
+          npm run build
       - name: Sync files to S3 bucket
         run: |
           cd front-end2/dist
