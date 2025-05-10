@@ -11,6 +11,8 @@ on:
 jobs:
   deploy-back-end:
     runs-on: ubuntu-latest
+    paths:
+      - 'back-end/**'
     steps:
     - name: Checkout source
       uses: actions/checkout@v4
@@ -26,6 +28,8 @@ jobs:
     
   deploy-front-end:
     runs-on: ubuntu-latest
+    paths:
+      - 'front-end2/**'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -52,27 +56,11 @@ jobs:
   
   db-migrations:
     runs-on: ubuntu-latest
+    paths:
+      - 'db/**'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      # - name: Migrate Tables
-      #   uses: yakubique/postgresql-apply-migrations@v1.1
-      #   with:
-      #     migrations: './db/migrations'
-      #     host: ${{ vars.PG_HOST }}
-      #     username: ${{ vars.PG_USER }}
-      #     password: ${{ secrets.PG_PWD }}
-      #     ssl: 'false'
-      
-      # - name: Migrate Data
-      #   uses: yakubique/postgresql-apply-migrations@v1.1
-      #   with:
-      #     migrations: './db/data'
-      #     host: ${{ vars.PG_HOST }}
-      #     username: ${{ vars.PG_USER }}
-      #     password: ${{ secrets.PG_PWD }}
-      #     ssl: 'false'
 
       - name: Run Flyway Migrations
         run: |
