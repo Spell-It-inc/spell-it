@@ -63,6 +63,7 @@ jobs:
           host: ${{ vars.PG_HOST }}
           username: ${{ vars.PG_USER }}
           password: ${{ secrets.PG_PWD }}
+          ssl: 'false'
       
       - name: Migrate Data
         uses: yakubique/postgresql-apply-migrations@v1.1
