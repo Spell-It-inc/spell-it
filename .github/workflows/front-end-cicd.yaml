@@ -1,15 +1,19 @@
-name: Push to S3
+name: Front-end CI/CD
 
 on: 
   push:
     branches:
       - main
+    paths:
+      - 'front-end2/**'
   pull_request:
     branches:
       - main
+    paths:
+      - 'front-end2/**'
 
 jobs:
-  deploy:
+  deploy-front-end:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
