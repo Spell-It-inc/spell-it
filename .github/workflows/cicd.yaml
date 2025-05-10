@@ -1,4 +1,4 @@
-name: Push to S3
+name: Everything CI/CD
 
 on: 
   push:
@@ -49,3 +49,14 @@ jobs:
           cd front-end2
           ls
           aws s3 sync . s3://spellit --delete
+  
+  db-migrations:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apply PostgreSQL migrations
+        uses: yakubique/postgresql-apply-migrations@v1.1
+        with:
+          migrations: './.github/migrations'
+          host: ${{ vars.PG_HOST }}
+          username: ${{ vars.PG_USER }}
+          password: ${{ secrets.PG_PWD }}
