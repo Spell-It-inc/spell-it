@@ -22,5 +22,6 @@ jobs:
           aws-region: af-south-1
       - name: Sync files to S3 bucket
         run: |
+          ls
           cd front-end2
           aws s3 sync /dist s3://spellit --delete
