@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "echo 'no build script'"
+    "build": "npm i; npx tsc; cp src/index.html dist/; cp src/styles.css dist/; cp -r src/assets dist/assets"
   },
   "dependencies": {
     "typescript": "^5.8.3"
