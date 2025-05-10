@@ -35,6 +35,5 @@ jobs:
           npx tsc
       - name: Sync files to S3 bucket
         run: |
-          cd front-end2
-          ls
-          aws s3 sync . s3://spellit --delete
+          cd front-end2/dist
+          aws s3 cp dist/ s3://spellit/dist/ --recursive --cache-control "max-age=0, no-cache, no-store, must-revalidate"
