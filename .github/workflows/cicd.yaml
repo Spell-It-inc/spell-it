@@ -76,5 +76,6 @@ jobs:
 
       - name: Run Flyway Migrations
         run: |
+          docker run --rm redgate/flyway -url="jdbc:postgresql://${{vars.PG_HOST}}:5432/postgres" -user="${{ vars.PG_USER }}" -password="${{ secrets.PG_PWD }}" repair
           docker run --rm --volume ${{ github.workspace }}/db/migrations:/flyway/sql:ro redgate/flyway -url="jdbc:postgresql://${{vars.PG_HOST}}:5432/postgres" -user="${{ vars.PG_USER }}" -password="${{ secrets.PG_PWD }}" migrate
           docker run --rm --volume ${{ github.workspace }}/db/data:/flyway/sql:ro redgate/flyway -url="jdbc:postgresql://${{vars.PG_HOST}}:5432/postgres" -user="${{ vars.PG_USER }}" -password="${{ secrets.PG_PWD }}" migrate
