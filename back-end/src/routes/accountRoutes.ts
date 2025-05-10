@@ -1,16 +1,9 @@
-import { Router, RequestHandler } from "express";
+import { Router } from "express";
 import { AccountController } from "../controllers/accountController";
 
 const router = Router();
-type IdParam = { id: string };
 
-const getAccountByIdHandler: RequestHandler<IdParam> = (req, res) =>
-  AccountController.getAccountById(req, res);
-
-const getProfilesAccountByIdHandler: RequestHandler<IdParam> = (req, res) =>
-  AccountController.getProfilesByAccountId(req, res);
-
-router.get("/:id", getAccountByIdHandler);
-router.get("/:id/profiles", getProfilesAccountByIdHandler);
+router.get("/:id", AccountController.getAccountById);
+router.get("/:id/profiles", AccountController.getProfilesByAccountId);
 
 export default router;
