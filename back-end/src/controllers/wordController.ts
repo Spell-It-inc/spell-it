@@ -20,7 +20,7 @@ export class WordController {
     }
   }
 
-  public static async create(req: Request, res: Response): Promise<void> {
+  public static async createWord(req: Request, res: Response): Promise<void> {
     try {
       const { categoryId, word } = req.body;
 
