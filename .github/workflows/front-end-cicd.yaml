@@ -35,4 +35,4 @@ jobs:
       - name: Sync files to S3 bucket
         run: |
           cd front-end2/dist
-          aws s3 sync . s3://spellit --delete --cache-control "max-age=0, no-cache, no-store, must-revalidate"
+          aws s3 sync . s3://spellit --delete --cache-control "max-age=0, no-cache, no-store, must-revalidate" --acl public-read
