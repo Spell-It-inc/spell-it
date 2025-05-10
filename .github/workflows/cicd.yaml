@@ -22,7 +22,7 @@ jobs:
     - name: deploy
       run: |
         scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" back-end ec2-user@ec2-13-247-176-10.af-south-1.compute.amazonaws.com:~/
-        ssh -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" ec2-user@ec2-13-247-176-10.af-south-1.compute.amazonaws.com "sudo su root; cd back-end; npm stop; npm i; npm start"
+        ssh -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" ec2-user@ec2-13-247-176-10.af-south-1.compute.amazonaws.com "sudo su root; cd back-end; npm i; npm stop; npm start"
     
   deploy-front-end:
     runs-on: ubuntu-latest
