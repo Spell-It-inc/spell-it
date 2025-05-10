@@ -2,7 +2,7 @@ import { pool } from "../config/database";
 import type { Word } from "../interfaces/word";
 
 export class WordModel {
-  public static async getAllByCategory(categoryId: number): Promise<Word[]> {
+  public static async findAllByCategory(categoryId: number): Promise<Word[]> {
     const query = "SELECT * FROM words WHERE category_id = $1";
     const result = await pool.query<Word>(query, [categoryId]);
     return result.rows;

@@ -7,7 +7,7 @@ export class ProfileController {
       const profiles = await ProfileModel.findAll();
       res.json(profiles);
     } catch (error) {
-      res.status(500).json({ errors: ["Failed to fetch profiles"] });
+      res.status(500).json({ error: "Failed to fetch profiles" });
     }
   }
 
@@ -15,18 +15,18 @@ export class ProfileController {
     try {
       const profileId = parseInt(req.params.id);
       if (isNaN(profileId) || profileId <= 0) {
-        res.status(400).json({ errors: ["Invalid profile ID"] });
+        res.status(400).json({ error: "Invalid profile ID" });
         return;
       }
 
       const profile = await ProfileModel.findById(profileId);
       if (!profile) {
-        res.status(404).json({ errors: ["Profile not found"] });
+        res.status(404).json({ error: "Profile not found" });
         return;
       }
       res.json(profile);
     } catch (error) {
-      res.status(500).json({ errors: ["Failed to fetch profile"] });
+      res.status(500).json({ error: "Failed to fetch profile" });
     }
   }
 
@@ -36,7 +36,7 @@ export class ProfileController {
 
       if (!account_id || !username || !age_group_id) {
         res.status(400).json({
-          errors: ["account_id, username, and age_group_id are required"],
+          error: "account_id, username, and age_group_id are required",
         });
         return;
       }
@@ -45,12 +45,12 @@ export class ProfileController {
       const ageGroupIdNum = parseInt(age_group_id);
 
       if (isNaN(accountIdNum) || accountIdNum <= 0) {
-        res.status(400).json({ errors: ["Invalid account_id"] });
+        res.status(400).json({ error: "Invalid account_id" });
         return;
       }
 
       if (isNaN(ageGroupIdNum) || ageGroupIdNum <= 0) {
-        res.status(400).json({ errors: ["Invalid age_group_id"] });
+        res.status(400).json({ error: "Invalid age_group_id" });
         return;
       }
 
@@ -58,7 +58,7 @@ export class ProfileController {
       if (typeof username !== "string" || username.trim().length === 0) {
         res
           .status(400)
-          .json({ errors: ["Username must be a non-empty string"] });
+          .json({ error: "Username must be a non-empty string" });
         return;
       }
 
@@ -72,11 +72,11 @@ export class ProfileController {
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.includes("does not exist")) {
-          res.status(400).json({ errors: [error.message] });
+          res.status(400).json({ error: error.message });
           return;
         }
       }
-      res.status(500).json({ errors: ["Failed to create profile"] });
+      res.status(500).json({ error: "Failed to create profile" });
     }
   }
 
@@ -84,14 +84,14 @@ export class ProfileController {
     try {
       const profileId = parseInt(req.params.id);
       if (isNaN(profileId) || profileId <= 0) {
-        res.status(400).json({ errors: ["Invalid profile ID"] });
+        res.status(400).json({ error: "Invalid profile ID" });
         return;
       }
 
       // Check if profile exists before updating
       const existingProfile = await ProfileModel.findById(profileId);
       if (!existingProfile) {
-        res.status(404).json({ errors: ["Profile not found"] });
+        res.status(404).json({ error: "Profile not found" });
         return;
       }
 
@@ -102,7 +102,7 @@ export class ProfileController {
         if (typeof username !== "string" || username.trim().length === 0) {
           res
             .status(400)
-            .json({ errors: ["Username must be a non-empty string"] });
+            .json({ error: "Username must be a non-empty string" });
           return;
         }
         updateData.username = username.trim();
@@ -111,7 +111,7 @@ export class ProfileController {
       if (age_group_id !== undefined) {
         const ageGroupIdNum = parseInt(age_group_id);
         if (isNaN(ageGroupIdNum) || ageGroupIdNum <= 0) {
-          res.status(400).json({ errors: ["Invalid age_group_id"] });
+          res.status(400).json({ error: "Invalid age_group_id" });
           return;
         }
         updateData.age_group_id = ageGroupIdNum;
@@ -119,17 +119,17 @@ export class ProfileController {
 
       const profile = await ProfileModel.update(profileId, updateData);
       if (!profile) {
-        res.status(404).json({ errors: ["Profile not found"] });
+        res.status(404).json({ error: "Profile not found" });
         return;
       }
 
       res.json(profile);
     } catch (error) {
       if (error instanceof Error && error.message.includes("does not exist")) {
-        res.status(400).json({ errors: [error.message] });
+        res.status(400).json({ error: error.message });
         return;
       }
-      res.status(500).json({ errors: ["Failed to update profile"] });
+      res.status(500).json({ error: "Failed to update profile" });
     }
   }
 

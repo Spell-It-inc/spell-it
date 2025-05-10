@@ -12,7 +12,7 @@ export class WordController {
       if (isNaN(categoryId)) {
         res.status(400).json({ error: "Invalid category ID" });
       } else {
-        const words = await WordModel.getAllByCategory(categoryId);
+        const words = await WordModel.findAllByCategory(categoryId);
         res.json(words);
       }
     } catch (error) {

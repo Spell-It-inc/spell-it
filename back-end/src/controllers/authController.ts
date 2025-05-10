@@ -13,7 +13,7 @@ export class AuthController {
     const { idToken } = req.body as GoogleLoginRequestBody;
 
     if (!idToken) {
-      res.status(400).json({ errors: ["idToken is required"] });
+      res.status(400).json({ error: "idToken is required" });
       return;
     }
 
@@ -43,7 +43,7 @@ export class AuthController {
         accountId: account.account_id,
       });
     } catch (error) {
-      res.status(401).json({ errors: ["Authentication failed"] });
+      res.status(401).json({ error: "Authentication failed" });
     }
   }
 }
