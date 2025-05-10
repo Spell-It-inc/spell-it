@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'db/**'
   pull_request:
     branches:
       - main
-  paths:
+    paths:
       - 'db/**'
 
 jobs:
