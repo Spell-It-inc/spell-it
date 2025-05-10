@@ -56,20 +56,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Migrate Tables
-        uses: yakubique/postgresql-apply-migrations@v1.1
-        with:
-          migrations: './db/migrations'
-          host: ${{ vars.PG_HOST }}
-          username: ${{ vars.PG_USER }}
-          password: ${{ secrets.PG_PWD }}
-          ssl: 'false'
+      # - name: Migrate Tables
+      #   uses: yakubique/postgresql-apply-migrations@v1.1
+      #   with:
+      #     migrations: './db/migrations'
+      #     host: ${{ vars.PG_HOST }}
+      #     username: ${{ vars.PG_USER }}
+      #     password: ${{ secrets.PG_PWD }}
+      #     ssl: 'false'
       
-      - name: Migrate Data
-        uses: yakubique/postgresql-apply-migrations@v1.1
-        with:
-          migrations: './db/data'
-          host: ${{ vars.PG_HOST }}
-          username: ${{ vars.PG_USER }}
-          password: ${{ secrets.PG_PWD }}
-          ssl: 'false'
+      # - name: Migrate Data
+      #   uses: yakubique/postgresql-apply-migrations@v1.1
+      #   with:
+      #     migrations: './db/data'
+      #     host: ${{ vars.PG_HOST }}
+      #     username: ${{ vars.PG_USER }}
+      #     password: ${{ secrets.PG_PWD }}
+      #     ssl: 'false'
+
+      - name: Run Flyway Migrations
+        run: |
+          docker run --rm --volume ${{ github.workspace }}/db/migrations:/flyway/sql:ro redgate/flyway -url="jdbc:postgresql://${{vars.PG_HOST}}:5432/postgres" -user="${{ vars.PG_USER }}" -password="${{ secrets.PG_PWD }}" migrate
