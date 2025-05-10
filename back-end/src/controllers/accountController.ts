@@ -3,6 +3,7 @@ import { AccountModel } from "../models/account";
 
 export class AccountController {
   static async getAccountById(req: Request, res: Response) {
+    console.log("testing here accounts calls")
     try {
       const accountId = parseInt(req.params.id);
 
