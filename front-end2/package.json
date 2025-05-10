@@ -1,15 +1,11 @@
 {
-  "name": "front-end2",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "my-v0-project",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "echo 'no build script'"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
+  "dependencies": {
     "typescript": "^5.8.3"
   }
 }
