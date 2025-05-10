@@ -7,3 +7,14 @@ export interface Profile extends QueryResultRow {
   age_group_id: number;
   created_at: Date;
 }
+
+export interface ProfileRewards {
+  profile_id: number;
+  username: string;
+  rewards: Array<{
+    reward_id: number;
+    name: string;
+    description: string;
+    earned_at: Date;
+  }>;
+}
