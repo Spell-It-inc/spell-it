@@ -33,4 +33,4 @@ jobs:
         run: |
           cd front-end2
           ls
-          aws s3 sync dist s3://spellit --delete
+          aws s3 sync . s3://spellit --delete
