@@ -9,7 +9,25 @@ on:
       - main
 
 jobs:
-  deploy:
+  deploy-back-end:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v4
+    - name: Setup Key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+    - name: deploy
+      run: |
+        scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" back-end ec2-user@ec2-13-247-176-10.af-south-1.compute.amazonaws.com:~/
+        ssh -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" ec2-user@ec2-13-247-176-10.af-south-1.compute.amazonaws.com "sudo su root; cd back-end; npm stop; npm i; npm start"
+    
+
+
+jobs:
+  deploy-front-end:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
