@@ -53,10 +53,21 @@ jobs:
   db-migrations:
     runs-on: ubuntu-latest
     steps:
-      - name: Apply PostgreSQL migrations
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Migrate Tables
         uses: yakubique/postgresql-apply-migrations@v1.1
         with:
-          migrations: './.github/migrations'
+          migrations: './db/migrations'
+          host: ${{ vars.PG_HOST }}
+          username: ${{ vars.PG_USER }}
+          password: ${{ secrets.PG_PWD }}
+      
+      - name: Migrate Data
+        uses: yakubique/postgresql-apply-migrations@v1.1
+        with:
+          migrations: './db/data'
           host: ${{ vars.PG_HOST }}
           username: ${{ vars.PG_USER }}
           password: ${{ secrets.PG_PWD }}
