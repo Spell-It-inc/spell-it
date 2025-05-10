@@ -12,4 +12,4 @@ VALUES
 (4, 'Diamond'), (4, 'Hexagon'), (4, 'Octagon'), (4, 'Star'), (4, 'Heart'),
 (5, 'Head'), (5, 'Arm'), (5, 'Leg'), (5, 'Eye'), (5, 'Ear'),
 (5, 'Nose'), (5, 'Mouth'), (5, 'Hand'), (5, 'Foot'), (5, 'Knee')
-ON CONFLICT (category) DO NOTHING;
+ON CONFLICT (category_id, word) DO NOTHING;
