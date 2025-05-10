@@ -71,3 +71,4 @@ jobs:
           host: ${{ vars.PG_HOST }}
           username: ${{ vars.PG_USER }}
           password: ${{ secrets.PG_PWD }}
+          ssl: 'false'
