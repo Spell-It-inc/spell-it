@@ -10,6 +10,12 @@ export class CategoryModel {
     return result.rows[0] || null;
   }
 
+  static async findAll(): Promise<Category[]> {
+    const query = "SELECT category_id, name, description FROM categories";
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
   static async findWithWordsById(
     id: number,
     page: number = 1,

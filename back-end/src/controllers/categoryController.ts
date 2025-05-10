@@ -52,4 +52,16 @@ export class CategoryController {
       res.status(500).json({ error: "Internal server error" });
     }
   }
+
+  public static async getAllCategories(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    try {
+      const categories = await CategoryModel.findAll();
+      res.json(categories);
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
 }
