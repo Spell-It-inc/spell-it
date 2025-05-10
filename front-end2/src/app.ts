@@ -1,4 +1,4 @@
-import { Router } from "./router.js"
+import { Router } from "./utils/router.js"
 import { HomeComponent } from "./components/home.js"
 import { AboutComponent } from "./components/about.js"
 import { ContactComponent } from "./components/contact.js"
@@ -30,6 +30,19 @@ if (document.readyState === "loading") {
 } else {
   // DOM already loaded, set up navigation immediately
   setupNavigation()
+}
+
+window.handleCredentialResponse = function(response) {
+  console.log(response);
+  const jwt = response.credential;
+  console.log("JWT ID token: ", jwt);
+
+  // Optional: Decode the JWT or send it to your server
+  const payload = JSON.parse(atob(jwt.split('.')[1]));
+  console.log("User Info:", payload);
+
+  // Do something useful with the login (e.g., show user name)
+  document.body.innerHTML += `<p>Signed in as ${payload.name}</p>`;
 }
 
 // Navigate to default route or route from URL hash

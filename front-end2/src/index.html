@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vanilla TS SPA</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
+
 <body>
   <header>
     <nav>
       <a href="#home" data-route="home">Home</a>
       <a href="#about" data-route="about">About</a>
       <a href="#contact" data-route="contact">Contact</a>
+      <div id="g_id_onload" data-client_id="144675851144-ukjtb70sl1k83j31r3tu2jafgvd0f4v6.apps.googleusercontent.com"
+        data-callback="handleCredentialResponse" data-auto_prompt="false">
+      </div>
+
+      <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with"
+        data-shape="rectangular" data-logo_alignment="left">
+      </div>
     </nav>
   </header>
-  
+
   <main id="app"></main>
-  
+
   <footer>
     <p>© 2025 Vanilla TS SPA 40</p>
   </footer>
-  
+  <script type="module" src="utils/types.js"></script>
   <script type="module" src="app.js"></script>
 </body>
+
 </html>
