@@ -1,7 +1,7 @@
 import { Router } from "./router.js"
-import { HomeComponent } from "./components/home"
-import { AboutComponent } from "./components/about"
-import { ContactComponent } from "./components/contact"
+import { HomeComponent } from "./components/home.js"
+import { AboutComponent } from "./components/about.js"
+import { ContactComponent } from "./components/contact.js"
 
 // Initialize the router
 const router = new Router("app")
