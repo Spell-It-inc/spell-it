@@ -1,4 +1,4 @@
-import { Router } from "./router"
+import { Router } from "./router.js"
 import { HomeComponent } from "./components/home"
 import { AboutComponent } from "./components/about"
 import { ContactComponent } from "./components/contact"
