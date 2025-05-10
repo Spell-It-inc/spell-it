@@ -1,17 +1,11 @@
-# Update system packages
+#!/bin/bash
+
 sudo yum update -y
+sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm install --lts
 
-# Install curl and git
-sudo yum install -y curl git
-
-# Install Node.js 18 from Nodesource (RPM version)
-curl -fsSL https://rpm.nodesource.com/setup_18.x | sudo bash -
-sudo yum install -y nodejs
-
-npm install -g pm2
-
-# Clone your project
-git clone https://github.com/Spell-It-inc/spell-it.git
-cd spell-it
-
-npm install
+# # transfer project to ec2 instance
+# sudo apt install git
+# git clone https://github.com/Spell-It-inc/spell-it.git
+# cd spell-it

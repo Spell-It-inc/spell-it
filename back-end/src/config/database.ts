@@ -6,6 +6,7 @@ dotenv.config();
 let _pool: Pool | null = null;
 
 export const getPool = (): Pool => {
+  console.log("Creating PostgreSQL connection pool");
   if (!_pool) {
     _pool = new Pool({
       host: process.env.DB_HOST,
