@@ -5,10 +5,16 @@ import authRoutes from "./routes/authRoutes";
 import wordRoutes from "./routes/wordRoutes";
 import categoryRoutes from "./routes/categoryRoutes";
 import gameRoutes from "./routes/gameRoutes";
+import cors from "cors";
 
 const app: Express = express();
 
 app.use(express.json());
+
+app.use(cors({
+  origin: "http://spellit.s3-website.af-south-1.amazonaws.com",
+  credentials: true
+}));
 
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Spell It API" });
