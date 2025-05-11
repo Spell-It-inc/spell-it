@@ -3,7 +3,7 @@ import { HomeComponent } from "./components/home.js"
 import { AboutComponent } from "./components/about.js"
 import { ContactComponent } from "./components/contact.js"
 
-const API_BASE_URL = "http://your-ec2-domain.af-south-1.compute.amazonaws.com:8080/api"; 
+const API_BASE_URL = "http://ec2-13-247-176-10.af-south-1.compute.amazonaws.com:8080/api"; 
 
 const router = new Router("app")
 
