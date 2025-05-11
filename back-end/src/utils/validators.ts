@@ -16,5 +16,9 @@ export function validateIdParam(req: Request, paramName: string): number {
         throw new AppError(`Invalid parameter '${paramName}': must be a number`, 400, true);
     }
 
+    if (parsed <= 0) {
+        throw new AppError(`Invalid parameter '${paramName}': number must be positive`, 400, true);
+    }
+
     return parsed;
 }

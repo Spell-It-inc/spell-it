@@ -9,15 +9,15 @@ export function validateSessionLogData(req: Request, res: Response, next: NextFu
     const { profile_id, game_id, category_id, score } = req.body;
     const errors: string[] = [];
 
-    if (!profile_id || isNaN(Number(profile_id))) {
+    if (!profile_id || isNaN(Number(profile_id)) || profile_id <= 0) {
         errors.push("Invalid or missing 'profile_id'.");
     }
 
-    if (!game_id || isNaN(Number(game_id))) {
+    if (!game_id || isNaN(Number(game_id)) || game_id <= 0) {
         errors.push("Invalid or missing 'game_id'.");
     }
 
-    if (!category_id || isNaN(Number(category_id))) {
+    if (!category_id || isNaN(Number(category_id)) || category_id <= 0) {
         errors.push("Invalid or missing 'category_id'.");
     }
 
