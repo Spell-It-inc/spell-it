@@ -1,4 +1,4 @@
-import type { Component } from "../types"
+import type { Component } from "../utils/types"
 
 export class AboutComponent implements Component {
   render(container: HTMLElement): void {
