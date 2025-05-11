@@ -1,4 +1,4 @@
-export {};
+export {}
 
 declare global {
   interface Window {
@@ -8,5 +8,5 @@ declare global {
 }
 
 export interface Component {
-  render(container: HTMLElement): void;
+  render(container: HTMLElement): void
 }
