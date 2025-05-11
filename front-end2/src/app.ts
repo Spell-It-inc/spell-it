@@ -4,7 +4,7 @@ import { AboutComponent } from "./components/about.js"
 import { ContactComponent } from "./components/contact.js"
 import { loadConfig, getApiBaseUrl } from "./utils/config.js"
 
-const router = new Router("app");
+const router = new Router("app")
 
 router.addRoute("home", new HomeComponent())
 router.addRoute("about", new AboutComponent())
@@ -39,9 +39,9 @@ window.handleCredentialResponse = async function (response: any) {
     const res = await fetch(`${getApiBaseUrl()}/auth/signin`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ idToken: jwt }),
+      body: JSON.stringify({ idToken: jwt })
     });
 
     if (!res.ok) throw new Error("Backend login failed");
@@ -52,6 +52,7 @@ window.handleCredentialResponse = async function (response: any) {
     document.body.innerHTML += `<p>Signed in as ${data.accountId}</p>`;
     localStorage.setItem("accountId", data.accountId);
     localStorage.setItem("idToken", jwt);
+    
   } catch (err) {
     console.error("Login failed", err);
     alert("Login failed. Please try again.");
