@@ -4,6 +4,8 @@ import accountRoutes from "./routes/accountRoutes";
 import authRoutes from "./routes/authRoutes";
 import wordRoutes from "./routes/wordRoutes";
 import categoryRoutes from "./routes/categoryRoutes";
+import sessionLogRoutes from "./routes/sessionLogRoutes";
+import { errorHandler } from "./middleware/errorHandler";
 
 const app: Express = express();
 
@@ -18,5 +20,7 @@ app.use("/api/profiles", profileRoutes);
 app.use("/api/accounts", accountRoutes);
 app.use("/api/words", wordRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/session-logs", sessionLogRoutes);
 
+app.use(errorHandler);
 export default app;
