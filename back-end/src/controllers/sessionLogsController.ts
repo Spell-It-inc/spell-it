@@ -11,6 +11,7 @@ export class sessionLogController {
             if (!result || result.length === 0) {
                 throw new AppError("No session logs found", 404, true);
             }
+            res.status(200).json(result);
         }
         catch (error) {
             next(error);
@@ -25,8 +26,26 @@ export class sessionLogController {
             if (!result) {
                 throw new AppError("No session log found", 404, true);
             }
+            res.status(200).json(result);
         }
         catch (error) {
+            next(error);
+        }
+    }
+
+    static async createSessionLog(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { profile_id, game_id, category_id, score } = req.body;
+
+            const newLog = await SessionLogModel.createSessionLog({
+                profile_id: Number(profile_id),
+                game_id: Number(game_id),
+                category_id: Number(category_id),
+                score: Number(score) || 0,
+            });
+
+            res.status(201).json(newLog);
+        } catch (error) {
             next(error);
         }
     }

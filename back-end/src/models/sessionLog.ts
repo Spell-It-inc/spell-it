@@ -17,4 +17,20 @@ export class SessionLogModel {
         return result.rows[0] || null;
     }
 
+    static async createSessionLog(data: {
+        profile_id: number;
+        game_id: number;
+        category_id: number;
+        score: number;
+    }): Promise<SessionLog> {
+        const query = `
+          INSERT INTO session_logs (profile_id, game_id, category_id, score)
+          VALUES ($1, $2, $3, $4);
+        `;
+
+        const values = [data.profile_id, data.game_id, data.category_id, data.score];
+        const result = await pool.query(query, values);
+        return result.rows[0];
+    }
+
 }
