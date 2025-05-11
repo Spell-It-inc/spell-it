@@ -15,7 +15,7 @@ router.addRoute("contact", new ContactComponent())
 function setupNavigation() {
   document.querySelectorAll("[data-route]").forEach((link) => {
     link.addEventListener("click", (e) => {
-      e.preventDefault()
+      e.preventDefault();
       const route = (e.currentTarget as HTMLElement).getAttribute("data-route")
       if (route) {
         router.navigateTo(route)
@@ -24,28 +24,46 @@ function setupNavigation() {
   })
 }
 
-// Set up navigation when DOM is loaded
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", setupNavigation)
 } else {
-  // DOM already loaded, set up navigation immediately
   setupNavigation()
 }
 
-window.handleCredentialResponse = function(response) {
-  console.log(response);
+// Update this with your actual EC2 public IP or domain (with http/https)
+const API_URL = "https://your-ec2-domain.com/api/auth/signin"; // ← Replace this
+
+// Google Sign-In callback
+window.handleCredentialResponse = async function (response) {
   const jwt = response.credential;
-  console.log("JWT ID token: ", jwt);
+  console.log("Google ID token:", jwt);
 
-  // Optional: Decode the JWT or send it to your server
-  const payload = JSON.parse(atob(jwt.split('.')[1]));
-  console.log("User Info:", payload);
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ idToken: jwt })
+    });
 
-  // Do something useful with the login (e.g., show user name)
-  document.body.innerHTML += `<p>Signed in as ${payload.name}</p>`;
-}
+    if (!res.ok) throw new Error("Backend login failed");
 
-// Navigate to default route or route from URL hash
+    const data = await res.json();
+    console.log("Signed in:", data);
+
+    // Display info or store tokens
+    document.body.innerHTML += `<p>Signed in as ${data.accountId}</p>`;
+    localStorage.setItem("accountId", data.accountId);
+    localStorage.setItem("idToken", jwt);
+
+  } catch (err) {
+    console.error("Login failed", err);
+    alert("Login failed. Please try again.");
+  }
+};
+
+// Route initialization
 function initializeRoute() {
   const hash = window.location.hash.substring(1)
   if (hash && router.hasRoute(hash)) {
@@ -55,7 +73,6 @@ function initializeRoute() {
   }
 }
 
-// Initialize the route
 initializeRoute()
 
 // Handle hash changes
