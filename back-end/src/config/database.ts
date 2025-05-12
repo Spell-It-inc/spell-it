@@ -14,6 +14,9 @@ export const getPool = (): Pool => {
       user: "user1",
       password: "password1234",
       database: "postgres",
+      ssl: {
+        rejectUnauthorized: false, // for development
+      },
     });
 
     // Log connection status
