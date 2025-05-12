@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "./config";
+const API_BASE_URL = "http://ec2-13-247-176-10.af-south-1.compute.amazonaws.com:8080/api";
 
 const usernameInput = document.getElementById("username") as HTMLInputElement;
 const ageGroupSelect = document.getElementById("age-group") as HTMLSelectElement;
