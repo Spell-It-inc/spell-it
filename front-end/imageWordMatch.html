@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Image Match - Spell It</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      background: linear-gradient(to top right, #a5d6c4, #cfd8dc);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    section {
+      background-color: #fdf8f6;
+      padding: 2rem;
+      border-radius: 25px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    header {
+      font-size: 2rem;
+      color: #4b8a79;
+      margin-bottom: 1rem;
+    }
+
+    figure {
+      margin: 1rem 0;
+    }
+
+    img {
+      width: 150px;
+      border-radius: 10px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    }
+
+    figcaption {
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+
+    li {
+      background: #fff;
+      padding: 0.6rem 1rem;
+      border: 2px solid #ccc;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    li:hover {
+      background-color: #f4a340;
+      color: white;
+    }
+
+    p.feedback {
+      margin: 1rem 0 0;
+      font-weight: bold;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background-color: #4b8a79;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <section>
+    <header>SPELL IT</header>
+
+    <figure>
+      <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Apple" />
+      <figcaption>What is this?</figcaption>
+    </figure>
+
+    <ul>
+      <li onclick="checkAnswer(this)">Dog</li>
+      <li onclick="checkAnswer(this)">Ball</li>
+      <li onclick="checkAnswer(this)">Apple</li>
+      <li onclick="checkAnswer(this)">Chair</li>
+    </ul>
+
+    <p class="feedback" id="resultMsg"></p>
+    <button onclick="nextMatch()">Next</button>
+  </section>
+
+  <script>
+    function checkAnswer(el) {
+      const answer = el.textContent;
+      const correct = "Apple";
+
+      const result = document.getElementById("resultMsg");
+      if (answer === correct) {
+        result.textContent = "✅ Correct!";
+        result.style.color = "green";
+      } else {
+        result.textContent = "❌ Try again!";
+        result.style.color = "red";
+      }
+    }
+
+    function nextMatch() {
+      alert("Next image coming soon!");
+    }
+  </script>
+
+</body>
+</html>

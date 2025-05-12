@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Spell-It Game Hub</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      background: linear-gradient(to top right, #a5d6c4, #cfd8dc);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    section {
+      background-color: #fdf8f6;
+      padding: 2rem;
+      border-radius: 25px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    header {
+      font-size: 2.2rem;
+      color: #4b8a79;
+      margin-bottom: 1rem;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    button {
+      background-color: #f4a340;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      width: 180px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <header>🎮 Choose Your Game</header>
+    
+    <nav>
+      <button onclick="goTo('missing-letters.html')">🔤 Missing Letters</button>
+      <button onclick="goTo('word-match.html')">🧩 Word & Image Match</button>
+      <button onclick="goTo('trace-word.html')">✍️ Trace the Word</button>
+      <button onclick="goTo('hangman.html')">🪢 Hangman</button>
+      <button onclick="goTo('drag-drop.html')">📦 Drag & Drop</button>
+    </nav>
+
+    <footer>Have fun and learn while playing!</footer>
+  </section>
+
+  <script>
+    function goTo(page) {
+      window.location.href = page;
+    }
+  </script>
+</body>
+</html>

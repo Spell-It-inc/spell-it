@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Spell the Word</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      background: linear-gradient(to top right, #a5d6c4, #cfd8dc);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    header {
+      font-size: 2rem;
+      color: #4b8a79;
+      margin-bottom: 1rem;
+    }
+
+    section {
+      background-color: #fdf8f6;
+      padding: 2rem;
+      border-radius: 25px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    img {
+      width: 100px;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    input[type="text"] {
+      margin-top: 0.5rem;
+      padding: 0.6rem;
+      width: 80%;
+      border: none;
+      border-radius: 12px;
+      box-shadow: inset 0 0 4px rgba(0,0,0,0.05);
+    }
+
+    button {
+      margin-top: 1rem;
+      background-color: #f4a340;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 0.8rem 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    p.feedback {
+      margin-top: 1rem;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>SPELL IT</header>
+
+  <section>
+    <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Cat" />
+    <label for="wordInput">Spell this word:</label><br />
+    <input type="text" id="wordInput" placeholder="Type here..." />
+    <br />
+    <button onclick="checkWord()">Submit</button>
+    <p class="feedback" id="feedbackMsg"></p>
+  </section>
+
+  <footer>Type the word that matches the image!</footer>
+
+  <script>
+    const correctWord = "cat";
+    function checkWord() {
+      const input = document.getElementById("wordInput").value.trim().toLowerCase();
+      const feedback = document.getElementById("feedbackMsg");
+      if (input === correctWord) {
+        feedback.textContent = "✅ Correct!";
+        feedback.style.color = "green";
+      } else {
+        feedback.textContent = "❌ Try Again!";
+        feedback.style.color = "red";
+      }
+    }
+  </script>
+
+</body>
+</html>

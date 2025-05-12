@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Spell-It Drag & Drop</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      background: linear-gradient(to top right, #a5d6c4, #cfd8dc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    main {
+      background-color: #fdf8f6;
+      border-radius: 25px;
+      padding: 2rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: #4b8a79;
+      margin-bottom: 1rem;
+    }
+
+    section[aria-label="drop-zone"] {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    span.drop {
+      width: 50px;
+      height: 50px;
+      border: 2px dashed #aaa;
+      border-radius: 10px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      background-color: white;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    li[draggable] {
+      width: 50px;
+      height: 50px;
+      background-color: #f4a340;
+      border-radius: 10px;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: grab;
+    }
+
+    p#message {
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #4b8a79;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Drag & Drop: Complete the Word</h1>
+
+    <section aria-label="drop-zone">
+      <span class="drop" data-letter="C"></span>
+      <span class="drop">A</span>
+      <span class="drop" data-letter="T"></span>
+    </section>
+
+    <ul>
+      <li draggable="true" data-letter="B">B</li>
+      <li draggable="true" data-letter="C">C</li>
+      <li draggable="true" data-letter="T">T</li>
+      <li draggable="true" data-letter="D">D</li>
+    </ul>
+
+    <p id="message"></p>
+  </main>
+
+  <script>
+    const drops = document.querySelectorAll(".drop");
+    const tiles = document.querySelectorAll("[draggable]");
+    const message = document.getElementById("message");
+
+    tiles.forEach(tile => {
+      tile.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("text/plain", tile.dataset.letter);
+      });
+    });
+
+    drops.forEach(drop => {
+      drop.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        drop.style.backgroundColor = "#e0f7fa";
+      });
+
+      drop.addEventListener("dragleave", () => {
+        drop.style.backgroundColor = "white";
+      });
+
+      drop.addEventListener("drop", (e) => {
+        e.preventDefault();
+        const letter = e.dataTransfer.getData("text/plain");
+        drop.textContent = letter;
+        drop.style.backgroundColor = "white";
+        checkAnswer();
+      });
+    });
+
+    function checkAnswer() {
+      const letters = Array.from(drops).map(d => d.textContent.trim());
+      if (letters.join("") === "CAT") {
+        message.textContent = "🎉 Great job! You spelled CAT!";
+      } else {
+        message.textContent = "";
+      }
+    }
+  </script>
+</body>
+</html>

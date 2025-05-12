@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spell-It Sign Up</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      background: linear-gradient(to top right, #b0d6c9, #e8eaf6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    main {
+      background-color: #fef9f6;
+      border-radius: 25px;
+      width: 90%;
+      max-width: 380px;
+      padding: 2rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    header {
+      margin-bottom: 1rem;
+    }
+
+    header img {
+      width: 80px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #4b8a79;
+      margin: 0.5rem 0;
+    }
+
+    form input[type="text"],
+    form input[type="password"],
+    form input[type="email"] {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border: none;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: inset 0 0 4px rgba(0,0,0,0.05);
+    }
+
+    select {
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 0.5rem;
+      border-radius: 10px;
+      border: none;
+      background: #fff;
+    }
+
+    button.signup-btn {
+      width: 100%;
+      background-color: #f4a340;
+      color: #fff;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    p.login {
+      font-size: 0.9rem;
+      margin-top: 1.5rem;
+    }
+
+    p.login a {
+      color: #4b8a79;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    section.oauth-signup {
+      margin-top: 1rem;
+    }
+
+    p.or {
+      margin: 0.5rem 0;
+      color: #999;
+    }
+
+    button.google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0.6rem 1rem;
+      width: 100%;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    button.google-btn img {
+      height: 18px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <img src="https://cdn-icons-png.flaticon.com/512/3047/3047926.png" alt="Register icon" />
+      <h1>Create Account</h1>
+    </header>
+
+    <form>
+      <input type="text" placeholder="Username" required />
+      <input type="email" placeholder="Email" required />
+      <input type="password" placeholder="Password" required />
+      <select required>
+        <option value="">Select Age Group</option>
+        <option value="1">4–6 years</option>
+        <option value="2">7–9 years</option>
+        <option value="3">10–12 years</option>
+      </select>
+      <button type="submit" class="signup-btn">Sign Up</button>
+    </form>
+
+    <p class="login">Already have an account? <a href="#">Log in</a></p>
+
+    <section class="oauth-signup">
+      <p class="or">or</p>
+      <button class="google-btn" onclick="signUpWithGoogle()">
+        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" />
+        Sign up with Google
+      </button>
+    </section>
+  </main>
+
+  <script>
+    function signUpWithGoogle() {
+      window.location.href = 'http://localhost:3000/auth/google';
+    }
+  </script>
+</body>
+</html>

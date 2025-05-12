@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Trace the Word - Spell It</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      background: linear-gradient(to top right, #a5d6c4, #cfd8dc);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    section {
+      background-color: #fdf8f6;
+      padding: 2rem;
+      border-radius: 25px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    header {
+      font-size: 2rem;
+      color: #4b8a79;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      font-size: 1.2rem;
+      color: #333;
+      display: block;
+      margin: 1rem 0 0.5rem;
+    }
+
+    canvas {
+      background-color: white;
+      border: 2px dashed #4b8a79;
+      border-radius: 15px;
+      touch-action: none;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background-color: #f4a340;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    p.feedback {
+      margin-top: 0.5rem;
+      font-weight: bold;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <section>
+    <header>SPELL IT</header>
+    <label>Trace the word:</label>
+    <canvas id="traceCanvas" width="300" height="150"></canvas>
+    <p class="feedback">Try to trace over the letters!</p>
+    <button onclick="clearCanvas()">Clear</button>
+  </section>
+
+  <script>
+    const canvas = document.getElementById("traceCanvas");
+    const ctx = canvas.getContext("2d");
+    let drawing = false;
+
+    // Draw background guide word
+    ctx.font = "80px Arial Rounded MT Bold";
+    ctx.fillStyle = "#ddd";
+    ctx.fillText("CAT", 40, 110);
+
+    function startDrawing(e) {
+      drawing = true;
+      ctx.beginPath();
+      ctx.moveTo(getX(e), getY(e));
+    }
+
+    function draw(e) {
+      if (!drawing) return;
+      ctx.lineTo(getX(e), getY(e));
+      ctx.strokeStyle = "#4b8a79";
+      ctx.lineWidth = 4;
+      ctx.lineCap = "round";
+      ctx.stroke();
+    }
+
+    function endDrawing() {
+      drawing = false;
+    }
+
+    function getX(e) {
+      return e.touches ? e.touches[0].clientX - canvas.getBoundingClientRect().left
+                       : e.clientX - canvas.getBoundingClientRect().left;
+    }
+
+    function getY(e) {
+      return e.touches ? e.touches[0].clientY - canvas.getBoundingClientRect().top
+                       : e.clientY - canvas.getBoundingClientRect().top;
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#ddd";
+      ctx.font = "80px Arial Rounded MT Bold";
+      ctx.fillText("CAT", 40, 110);
+    }
+
+    canvas.addEventListener("mousedown", startDrawing);
+    canvas.addEventListener("mousemove", draw);
+    canvas.addEventListener("mouseup", endDrawing);
+    canvas.addEventListener("touchstart", startDrawing);
+    canvas.addEventListener("touchmove", draw);
+    canvas.addEventListener("touchend", endDrawing);
+  </script>
+
+</body>
+</html>

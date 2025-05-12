@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spell-It Login</title>
+  <link rel="stylesheet" href="login.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      background: linear-gradient(to top right, #a5d6c4, #cfd8dc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background-color: #fdf8f6;
+      border-radius: 25px;
+      width: 90%;
+      max-width: 350px;
+      padding: 2rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      text-align: center;
+      position: relative;
+    }
+
+    .logo {
+      font-size: 2rem;
+      color: #4b8a79;
+      margin-bottom: 1rem;
+    }
+
+    .login-form input[type="text"],
+    .login-form input[type="password"] {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border: none;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: inset 0 0 4px rgba(0,0,0,0.05);
+    }
+
+    .forgot {
+      display: block;
+      font-size: 0.85rem;
+      color: #000;
+      margin: 0.5rem 0;
+      text-align: right;
+      font-weight: bold;
+    }
+
+    .go-btn {
+      width: 100%;
+      background-color: #f4a340;
+      color: #fff;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+
+    .signup {
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .signup a {
+      color: #4b8a79;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .oauth-login {
+      margin-top: 1rem;
+    }
+
+    .or {
+      margin: 0.5rem 0;
+      color: #999;
+    }
+
+    .google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0.6rem 1rem;
+      width: 100%;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .google-btn img {
+      height: 18px;
+    }
+
+    .illustration {
+      width: 100px;
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1 class="logo">SPELL IT</h1>
+
+    <form class="login-form">
+      <input type="text" placeholder="Username" required />
+      <input type="password" placeholder="Password" required />
+      <a href="#" class="forgot">Forgot Password?</a>
+      <button type="submit" class="go-btn">GO</button>
+      <p class="signup">Don’t have an account yet? <a href="#">Sign Up</a></p>
+    </form>
+
+    <div class="oauth-login">
+      <p class="or">or</p>
+      <button class="google-btn" onclick="signInWithGoogle()">
+        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" />
+        Sign in with Google
+      </button>
+    </div>
+
+    <img class="illustration" src="dragon_kids.png" alt="Kids on dragon" />
+  </div>
+
+  <script>
+    function signInWithGoogle() {
+      window.location.href = 'http://localhost:3000/auth/google';
+    }
+  </script>
+</body>
+</html>

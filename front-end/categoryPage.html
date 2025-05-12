@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spell-It Categories</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      background: linear-gradient(to top right, #a5d6c4, #cfd8dc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    main {
+      background-color: #fdf8f6;
+      border-radius: 25px;
+      width: 90%;
+      max-width: 350px;
+      padding: 2rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h1 {
+      color: #4b8a79;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    button {
+      background-color: #f4a340;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 0.8rem 1.2rem;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Pick a Category</h1>
+    <section>
+      <button onclick="choose('animals')">🐶</button>
+      <button onclick="choose('colours')">🎨</button>
+      <button onclick="choose('shapes')">🔺</button>
+      <button onclick="choose('numbers')">🔢</button>
+    </section>
+    <footer>&copy; Spell-It</footer>
+  </main>
+
+  <script>
+    function choose(category) {
+      alert("Selected: " + category);
+      // window.location.href = `/games/${category}`;
+    }
+  </script>
+</body>
+</html>
