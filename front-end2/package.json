@@ -1,15 +1,11 @@
 {
-  "name": "front-end2",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "my-v0-project",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm i; npx tsc; cp src/index.html dist/; cp src/styles.css dist/; cp -r src/assets dist/assets; cp src/favicon.ico dist/"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
+  "dependencies": {
     "typescript": "^5.8.3"
   }
 }
