@@ -2,39 +2,23 @@ const API_BASE_URL = "http://ec2-13-247-176-10.af-south-1.compute.amazonaws.com:
 
 const usernameInput = document.getElementById("username") as HTMLInputElement;
 const ageGroupSelect = document.getElementById("age-group") as HTMLSelectElement;
-const googleSigninBtn = document.getElementById("google-signin") as HTMLButtonElement;
-
-googleSigninBtn.addEventListener("click", () => {
-  const username = usernameInput.value.trim();
-  const ageGroup = ageGroupSelect.value;
-
-  if (!username || !ageGroup) {
-    alert("Please enter your name and select your age group.");
-    return;
-  }
-
-  // Store username and age group before redirect
-  localStorage.setItem("username", username);
-  localStorage.setItem("ageGroup", ageGroup);
-
-  // Google sign-in logic
-  if (window.google && window.google.accounts && window.google.accounts.id) {
-    window.google.accounts.id.initialize({
-      client_id: "249850029476-h2qpm8hqaa82r4ifbt4sij8f6s6qqs3e.apps.googleusercontent.com",
-      callback: handleCredentialResponse
-    });
-
-    window.google.accounts.id.prompt();  // Prompt the user to sign in
-  } else {
-    console.error("Google Sign-In is not available.");
-  }
-});
+const googleSigninDiv = document.getElementById("google-signin");
 
 function handleCredentialResponse(response: any) {
   const jwt = response.credential;
   console.log("Google ID token:", jwt);
 
-  // Send the JWT to your backend for validation
+  const username = usernameInput.value.trim();
+  const ageGroup = ageGroupSelect.value;
+
+  if (!username || !ageGroup) {
+    alert("Please enter your name and select your age group before signing in.");
+    return;
+  }
+
+  localStorage.setItem("username", username);
+  localStorage.setItem("ageGroup", ageGroup);
+
   fetch(`${API_BASE_URL}/auth/signin`, {
     method: "POST",
     headers: {
@@ -42,17 +26,37 @@ function handleCredentialResponse(response: any) {
     },
     body: JSON.stringify({ idToken: jwt })
   })
-  .then((res) => res.json())
-  .then((data) => {
-    console.log("Signed in as", data.accountId);
-    localStorage.setItem("accountId", data.accountId);
-    localStorage.setItem("idToken", jwt);
-    
-    // Optionally store username and age group before redirecting
-    alert("Login successful! Redirecting will be added soon.");
-  })
-  .catch((err) => {
-    console.error("Login failed", err);
-    alert("Login failed. Please try again.");
-  });
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("Signed in as", data.accountId);
+      localStorage.setItem("accountId", data.accountId);
+      localStorage.setItem("idToken", jwt);
+
+      alert("Login successful! Redirecting will be added soon.");
+    })
+    .catch((err) => {
+      console.error("Login failed", err);
+      alert("Login failed. Please try again.");
+    });
 }
+
+function initializeGoogleSignIn() {
+  if (window.google && window.google.accounts && window.google.accounts.id) {
+    window.google.accounts.id.initialize({
+      client_id: "249850029476-h2qpm8hqaa82r4ifbt4sij8f6s6qqs3e.apps.googleusercontent.com",
+      callback: handleCredentialResponse
+    });
+
+    if (googleSigninDiv) {
+      window.google.accounts.id.renderButton(googleSigninDiv, {
+        theme: "outline",
+        size: "large",
+        type: "standard"
+      });
+    }
+  } else {
+    console.error("Google Sign-In is not available.");
+  }
+}
+
+window.addEventListener("DOMContentLoaded", initializeGoogleSignIn);
