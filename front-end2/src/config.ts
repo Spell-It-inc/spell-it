@@ -1,1 +1,0 @@
-export const API_BASE_URL = "http://ec2-13-247-176-10.af-south-1.compute.amazonaws.com:8080/api";
