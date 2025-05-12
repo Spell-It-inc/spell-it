@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "./config";
+
 const usernameInput = document.getElementById("username") as HTMLInputElement;
 const ageGroupSelect = document.getElementById("age-group") as HTMLSelectElement;
 const googleSigninBtn = document.getElementById("google-signin") as HTMLButtonElement;
@@ -33,7 +35,7 @@ function handleCredentialResponse(response: any) {
   console.log("Google ID token:", jwt);
 
   // Send the JWT to your backend for validation
-  fetch("/auth/signin", {
+  fetch(`${API_BASE_URL}/auth/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -47,7 +49,7 @@ function handleCredentialResponse(response: any) {
     localStorage.setItem("idToken", jwt);
     
     // Optionally store username and age group before redirecting
-    window.location.href = "/dashboard.html";
+    alert("Login successful! Redirecting will be added soon.");
   })
   .catch((err) => {
     console.error("Login failed", err);

@@ -4,7 +4,7 @@ export class HomeComponent implements Component {
   render(container: HTMLElement): void {
     container.innerHTML = `
       <div class="page home-page">
-        <h1>Welcome to Vanilla TS SPA</h1>
+        <h1>Hello SpellBuddy</h1>
         <p>This is a single page application built with vanilla TypeScript.</p>
         <div class="features">
           <div class="feature">
@@ -28,7 +28,7 @@ export class HomeComponent implements Component {
     const ctaButton = container.querySelector("#cta-button")
     if (ctaButton) {
       ctaButton.addEventListener("click", () => {
-        alert("Welcome to our Vanilla TS SPA!")
+        alert("Welcome to our app")
       })
     }
   }
