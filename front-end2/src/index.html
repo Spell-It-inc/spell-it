@@ -11,7 +11,7 @@
   <main>
     <header>
       <img src="https://cdn-icons-png.flaticon.com/512/3047/3047926.png" alt="Register icon" />
-      <h1>Let’s Get Started!</h1>
+      <h1>Let's Get Started!</h1>
       <p class="subtitle">Tell us your name and age group to begin your spelling adventure!</p>
     </header>
 
@@ -23,10 +23,18 @@
         <option value="2">7–9 years</option>
         <option value="3">10–12 years</option>
       </select>
-      <button type="button" class="google-btn" id="google-signin">
-        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" />
-        Sign in with Google
-      </button>
+      <div id="g_id_onload"
+         data-client_id="249850029476-h2qpm8hqaa82r4ifbt4sij8f6s6qqs3e.apps.googleusercontent.com"
+         data-context="signin"
+         data-callback="handleCredentialResponse">
+      </div>
+      <div id="google-signin" class="g_id_signin"
+         data-type="standard"
+         data-size="large"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-shape="rectangular">
+      </div>
     </form>
   </main>
   
