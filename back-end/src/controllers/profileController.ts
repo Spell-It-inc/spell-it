@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ProfileModel } from "../models/profile";
 import { ensureExists, validateExistsInDB, validateId, validatePresence } from "../utils/validators";
-import { AppError } from "../errors/AppError";
+import { handleDatabaseError } from "../utils/handleDatabaseError";
 
 export class ProfileController {
   static async getAllProfiles(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -43,12 +43,7 @@ export class ProfileController {
 
       res.status(201).json(profile);
     } catch (error: any) {
-      if (error.code === "23505") {
-        // Postgres unique constraint violation
-        next(new AppError("Username already exists", 409, true));
-      } else {
-        next(error);
-      }
+      next(handleDatabaseError(error));
     }
   }
 
@@ -75,8 +70,8 @@ export class ProfileController {
       const profile = await ProfileModel.update(profileId, updateData);
 
       res.json(profile);
-    } catch (error) {
-      next(error);
+    } catch (error: any) {
+      next(handleDatabaseError(error))
     }
   }
 
