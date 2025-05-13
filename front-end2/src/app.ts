@@ -20,25 +20,29 @@ function handleCredentialResponse(response: any) {
   localStorage.setItem("ageGroup", ageGroup);
 
   fetch(`${API_BASE_URL}/auth/signin`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ idToken: jwt })
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ idToken: jwt })
+})
+  .then(async (res) => {
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(`Server responded with ${res.status}: ${errText}`);
+    }
+    return res.json();
   })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log("Signed in as", data.accountId);
-      localStorage.setItem("accountId", data.accountId);
-      localStorage.setItem("idToken", jwt);
-
-      alert("Login successful! Redirecting will be added soon.");
-    })
-    .catch((err) => {
-      console.error("Login failed", err);
-      alert("Login failed. Please try again.");
-    });
-}
+  .then((data) => {
+    console.log("Signed in as", data.accountId);
+    localStorage.setItem("accountId", data.accountId);
+    localStorage.setItem("idToken", jwt);
+    alert("Login successful! Redirecting will be added soon.");
+  })
+  .catch((err) => {
+    console.error("Login failed", err);
+    alert("Login failed. Please try again.");
+  });
 
 function initializeGoogleSignIn() {
   if (window.google && window.google.accounts && window.google.accounts.id) {
@@ -60,3 +64,4 @@ function initializeGoogleSignIn() {
 }
 
 window.addEventListener("DOMContentLoaded", initializeGoogleSignIn);
+}
