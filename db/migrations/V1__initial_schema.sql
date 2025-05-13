@@ -70,6 +70,7 @@ CREATE TABLE earned_rewards(
   earned_reward_id SERIAL PRIMARY KEY,
   profile_id INT,
   reward_id INT,
+  earned_at TIMESTAMP,
   CONSTRAINT fk_profile_id FOREIGN KEY(profile_id) REFERENCES profiles(profile_id),
   CONSTRAINT fk_reward_id FOREIGN KEY(reward_id) REFERENCES rewards(reward_id)
 );
