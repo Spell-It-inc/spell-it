@@ -32,7 +32,7 @@ export class ProfileController {
       const ageGroupId = parseInt(age_group_id);
 
       //check database existence
-      await validateExistsInDB("accounts", "id", accountId, "Account");
+      await validateExistsInDB("accounts", "account_id", accountId, "Account");
       await validateExistsInDB("age_groups", "age_group_id", ageGroupId, "Age group");
 
       const profile = await ProfileModel.create({

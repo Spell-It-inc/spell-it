@@ -1,5 +1,5 @@
 CREATE TABLE accounts(
-  id SERIAL PRIMARY KEY,
+  account_id SERIAL PRIMARY KEY,
   auth_sub VARCHAR NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -16,7 +16,7 @@ CREATE TABLE profiles(
   username VARCHAR UNIQUE NOT NULL,
   age_group_id INT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT fk_account_id FOREIGN KEY(account_id) REFERENCES accounts(id),
+  CONSTRAINT fk_account_id FOREIGN KEY(account_id) REFERENCES accounts(account_id),
   CONSTRAINT fk_age_group_id FOREIGN KEY(age_group_id) REFERENCES age_groups(age_group_id)
 );
 
