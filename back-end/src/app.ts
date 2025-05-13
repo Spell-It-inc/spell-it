@@ -16,10 +16,6 @@ app.use(cors({
   credentials: true
 }));
 
-app.get("/", (req: Request, res: Response) => {
-  res.json({ message: "Spell It API" });
-});
-
 app.use("/api/auth", authRoutes);
 app.use("/api/profiles", profileRoutes);
 app.use("/api/accounts", accountRoutes);

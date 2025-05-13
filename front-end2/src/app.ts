@@ -42,7 +42,13 @@ function handleCredentialResponse(response: any) {
     },
     body: JSON.stringify({ idToken: jwt })
   })
-    .then((res) => res.json())
+    .then(async (res) => {
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`Server responded with ${res.status}: ${errText}`);
+      }
+      return res.json();
+    })
     .then((data) => {
       console.log("Signed in as", data.accountId);
       localStorage.setItem("accountId", data.accountId);
