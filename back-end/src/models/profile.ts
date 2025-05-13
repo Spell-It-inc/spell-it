@@ -19,23 +19,6 @@ export class ProfileModel {
     username: string;
     age_group_id: number;
   }): Promise<Profile> {
-    // Check if account and age group exist before creating the profile
-    const accountResult = await pool.query(
-      "SELECT account_id FROM accounts WHERE account_id = $1",
-      [profileData.account_id]
-    );
-    if (accountResult.rows.length === 0) {
-      throw new Error("Invalid account_id: Account does not exist");
-    }
-
-    const ageGroupResult = await pool.query(
-      "SELECT age_group_id FROM age_groups WHERE age_group_id = $1",
-      [profileData.age_group_id]
-    );
-    if (ageGroupResult.rows.length === 0) {
-      throw new Error("Invalid age_group_id: Age group does not exist");
-    }
-
     const query = `
             INSERT INTO profiles (account_id, username, age_group_id, created_at)
             VALUES ($1, $2, $3, CURRENT_TIMESTAMP)
@@ -54,17 +37,6 @@ export class ProfileModel {
     id: number,
     profileData: Partial<Pick<Profile, "username" | "age_group_id">>
   ): Promise<Profile | null> {
-    // Validate age_group_id if it's being updated
-    if (profileData.age_group_id !== undefined) {
-      const ageGroupResult = await pool.query(
-        "SELECT age_group_id FROM age_groups WHERE age_group_id = $1",
-        [profileData.age_group_id]
-      );
-      if (ageGroupResult.rows.length === 0) {
-        throw new Error("Invalid age_group_id: Age group does not exist");
-      }
-    }
-
     const updates: string[] = [];
     const values: any[] = [];
     let parameterIndex = 1;
