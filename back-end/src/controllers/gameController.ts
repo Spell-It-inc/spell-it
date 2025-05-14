@@ -16,7 +16,6 @@ export class GameController {
 
     static async getGameById(req: Request, res: Response, next: NextFunction) {
         try {
-            // const gameId = parseInt(req.params.id);
             const gameId = validateId(req.params.id, "Game ID");
 
             const game = ensureExists(await GameModel.findById(gameId), "Game");
