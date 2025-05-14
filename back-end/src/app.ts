@@ -9,6 +9,8 @@ import { errorHandler } from "./middleware/errorHandler";
 import gameRoutes from "./routes/gameRoutes";
 import cors from "cors";
 import { validateGoogleProfile } from "./middleware/verifyGoogleAuth";
+import { PingController } from "./controllers/pingController";
+import pingRoute from "./routes/pingRoute";
 
 const app: Express = express();
 
@@ -20,7 +22,7 @@ app.use(cors({
 }));
 
 // app.use('/api', validateGoogleProfile);
-
+app.use("/ping", pingRoute)
 app.use("/api/auth", authRoutes);
 app.use("/api/profiles", profileRoutes);
 app.use("/api/accounts", accountRoutes);
