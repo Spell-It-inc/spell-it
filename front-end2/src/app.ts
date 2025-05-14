@@ -1,30 +1,35 @@
 import { Router } from "./utils/router.js";
-import { HomeComponent } from "./components/home.js";
+import { ProfilesComponent } from "./components/profiles.js";
 
-const router = new Router('main')
-router.addRoute('home', new HomeComponent())
+const router = new Router('main');
+router.addRoute('profiles', new ProfilesComponent(router));
 
 if (!window.location.hash) {
   const params = new URLSearchParams(window.location.search);
+  
+  // Handle Google OAuth code exchange
   if (params.get('code')) {
-    console.log(params.get('code'))
-    console.log(window.__ENV__.API_BASE_URL+'api/auth/signin')
-    const response = await fetch(window.__ENV__.API_BASE_URL+'api/auth/signin', {
+    console.log(params.get('code'));
+    console.log(window.__ENV__.API_BASE_URL + 'api/auth/signin');
+    
+    const response = await fetch(window.__ENV__.API_BASE_URL + 'api/auth/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({code:params.get('code')})
-    })
-    if(response.ok){
+      body: JSON.stringify({ code: params.get('code') })
+    });
+
+    if (response.ok) {
       const jwt = await response.json();
-      sessionStorage.setItem('token', jwt.data.id_token)
+      sessionStorage.setItem('token', jwt.data.id_token);
     }
   }
 
-  if (sessionStorage.getItem('token') === undefined || sessionStorage.getItem('token') === null) { //NO TOKEN
-    const signInButton = document.getElementById('google-login')
-    signInButton.innerHTML = "Login with google";
+  // Check if the user has a token, if not, show the login button
+  if (!sessionStorage.getItem('token')) { // NO TOKEN
+    const signInButton = document.getElementById('google-login');
+    signInButton.innerHTML = "Login with Google";
     signInButton.addEventListener('click', () => {
       const params = new URLSearchParams({
         client_id: `${window.__ENV__.GOOGLE_CLIENT_ID}.apps.googleusercontent.com`,
@@ -37,22 +42,27 @@ if (!window.location.hash) {
       window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
     });
   } else { // THERE IS A TOKEN
-    const info = await fetch(window.__ENV__.API_BASE_URL+'api/auth/token-info', {
+    const info = await fetch(window.__ENV__.API_BASE_URL + 'api/auth/token-info', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({token:sessionStorage.getItem('token')})
-    })
-    const userInfo = await info.json()
-    document.getElementsByTagName('main')[0].innerHTML = 
-    `<h1>Welcome ${userInfo.name}</h1>
-    <a href="#" class="nav-link" data-route="home">Home</a>`
+      body: JSON.stringify({ token: sessionStorage.getItem('token') })
+    });
+    const userInfo = await info.json();
+
+    // Set the welcome page with options to create a new profile or go to existing profiles
+    document.getElementsByTagName('main')[0].innerHTML = `
+      <h1>Welcome ${userInfo.name}</h1>
+      <p class="subtitle">Manage your child's profiles and help them learn to spell.</p>
+      <a href="#" class="nav-link" data-route="profiles">Go to Your Profile(s)</a>
+    `;
   }
   window.history.replaceState({}, document.title, window.location.pathname);
 }
 
+// Handle route changes via hash
 window.addEventListener("hashchange", () => {
-  const route = window.location.hash.substring(1) || "home";
+  const route = window.location.hash.substring(1) || "profiles";
   router.navigateTo(route);
 });
