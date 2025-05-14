@@ -40,6 +40,21 @@ export class CategoryModel {
     const totalItems = parseInt(countResult.rows[0].count, 10);
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
+    if (totalPages === 0) {
+      return {
+        category_id: categoryResult.rows[0].category_id,
+        name: categoryResult.rows[0].name,
+        words: [],
+        pagination: {
+          totalItems: 0,
+          itemCount: 0,
+          itemsPerPage,
+          totalPages: 0,
+          currentPage: 1,
+        },
+      };
+    }
+
     if (page < 1) page = 1;
     if (page > totalPages) page = totalPages;
 

@@ -32,7 +32,7 @@ export class ProfileController {
       const ageGroupId = parseInt(age_group_id);
 
       //check database existence
-      await validateExistsInDB("accounts", "id", accountId, "Account");
+      await validateExistsInDB("accounts", "account_id", accountId, "Account");
       await validateExistsInDB("age_groups", "age_group_id", ageGroupId, "Age group");
 
       const profile = await ProfileModel.create({
@@ -77,26 +77,17 @@ export class ProfileController {
 
   public static async getEarnedRewards(
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
   ): Promise<void> {
     try {
-      const profileId = parseInt(req.params.id);
+      const profileId = validateId(req.params.id, "profile_id")
 
-      if (isNaN(profileId) || profileId <= 0) {
-        res.status(400).json({ error: "Invalid profile ID" });
-      } else {
-        const rewards = await ProfileModel.findEarnedRewardsByProfileId(
-          profileId
-        );
+      const rewards = ensureExists(await ProfileModel.findEarnedRewardsByProfileId(profileId), "Profile");
 
-        if (!rewards) {
-          res.status(404).json({ error: "Profile not found" });
-        } else {
-          res.json(rewards);
-        }
-      }
-    } catch (error) {
-      res.status(500).json({ error: "Internal server error" });
+      res.json(rewards);
+    } catch (error: any) {
+      next(error);
     }
   }
 }

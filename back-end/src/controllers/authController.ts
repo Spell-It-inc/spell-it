@@ -17,11 +17,14 @@ export class AuthController {
         code,
         client_id: process.env.GOOGLE_CLIENT_ID ?? "",
         client_secret: process.env.GOOGLE_CLIENT_SECRET ?? "",
-        redirect_uri: process.env.REDIRECT_URI ?? "", // e.g., http://localhost:8080
+        redirect_uri: process.env.REDIRECT_URI + "/", // e.g., http://localhost:8080
         grant_type: 'authorization_code'
       })
     });
     const data = await response.json()
+    console.log(code)
+    console.log()
+    console.log(data)
     if (data.id_token) {
       res.status(200).json({data})
     } else {
