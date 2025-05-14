@@ -34,5 +34,6 @@ jobs:
           npm run build
       - name: Sync files to S3 bucket
         run: |
+          echo "${{vars.FRONT_ENVIRONMENT_VARIABLES}}" > front-end2/dist/public/config.js
           cd front-end2/dist
           aws s3 sync . s3://spellit --delete --cache-control "max-age=0, no-cache, no-store, must-revalidate"

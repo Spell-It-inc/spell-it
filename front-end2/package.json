@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "npm i; npx tsc; cp src/index.html dist/; cp src/styles.css dist/; cp -r src/assets dist/assets; cp src/favicon.ico dist/"
+    "build": "npm i && npx tsc && cp src/index.html dist/ && cp src/styles.css dist/ && cp -r src/assets dist/assets && cp src/favicon.ico dist/ && cp -r public dist/public"
   },
   "dependencies": {
+    "dotenv": "^16.5.0",
     "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.17"
   }
 }

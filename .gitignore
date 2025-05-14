@@ -177,3 +177,4 @@ terraform.rc
 *package-lock.json
 
 *.DS_Store
+*.env
