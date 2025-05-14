@@ -3,14 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spell-It Sign In</title>
+  <title>Spell-It - Learn to Spell!</title>
   <link rel="stylesheet" href="styles.css" />
   <script src="public/config.js"></script>
   <script type="module" src="app.js"></script>
 </head>
 <body>
   <main>
-    <button id="google-login">The system is broken if you are seeing this</button>
+    <header>
+      <figure class="logo">
+        <span class="logo-icon" role="img" aria-label="Spell-It Logo">Aa</span>
+      </figure>
+      <h1>Spell-It</h1>
+      <p class="subtitle">Fun spelling games for curious minds!</p>
+    </header>
+    
+    <section class="login-container">
+      <button id="google-login" class="login-button">
+        <span class="button-text">The system is broken if you are seeing this</span>
+      </button>
+    </section>
+    
+    <section id="profiles-container" class="profiles-container hidden">
+      <h2>Choose Your Profile</h2>
+      <nav id="profiles-list" class="profiles-list" aria-label="User profiles"></nav>
+    </section>
   </main>
+  
+  <footer>
+    <p>© 2025 Spell-It Learning</p>
+  </footer>
 </body>
 </html>
