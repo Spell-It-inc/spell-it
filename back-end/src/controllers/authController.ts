@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import { OAuth2Client } from "google-auth-library";
 import { decodeJwt } from "jose";
 import dotenv from "dotenv";
+import { AccountModel } from "../models/account";
 
 
 dotenv.config({ path: "local.env" });
@@ -10,7 +11,7 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export class AuthController {
   static async handleGoogleLogin(req: Request, res: Response): Promise<void> {
-    const { code }= req.body;
+    const { code } = req.body;
     const response = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -23,10 +24,19 @@ export class AuthController {
       })
     });
     const data = await response.json()
-    if (data.id_token) {
-      res.status(200).json({data})
+    if (data.id_token) {// Check if user exists in DB
+      const userInfo = decodeJwt(data.id_token)
+      if (userInfo.sub) {
+        let account = await AccountModel.findByAuthSub(userInfo.sub);
+        if (!account) {
+          console.log("Creating new account...");
+          account = await AccountModel.create(userInfo.sub);
+          console.log("Account created:", account);
+        }
+        res.status(200).json({ data })
+      }
     } else {
-      res.status(500).json({error:"Failed to authenticate"})
+      res.status(500).json({ error: "Failed to authenticate" })
     }
     return
   }
@@ -37,7 +47,7 @@ export class AuthController {
     try {
       res.status(200).json(decodeJwt(token.token))
     } catch (err) {
-      res.status(500).json({error:"Not a token"})
+      res.status(500).json({ error: "Not a token" })
     }
     return
   }
