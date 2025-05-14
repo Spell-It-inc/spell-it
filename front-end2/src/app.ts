@@ -1,8 +1,12 @@
 import { Router } from "./utils/router.js";
 import { HomeComponent } from "./components/home.js";
+import { CategoriesComponent } from "./components/categories.js";
+import { CategoryComponent } from "./components/category.js";
 
 const router = new Router('main')
 router.addRoute('home', new HomeComponent())
+router.addRoute('categories', new CategoriesComponent())
+router.addRoute('category', new CategoryComponent())
 
 if (!window.location.hash) {
   const params = new URLSearchParams(window.location.search);
@@ -47,7 +51,8 @@ if (!window.location.hash) {
     const userInfo = await info.json()
     document.getElementsByTagName('main')[0].innerHTML = 
     `<h1>Welcome ${userInfo.name}</h1>
-    <a href="#" class="nav-link" data-route="home">Home</a>`
+    <a href="#" class="nav-link" data-route="home">Home</a>
+    <a href="#categories" class="nav-link" data-route="category">Categories</a>`
   }
   window.history.replaceState({}, document.title, window.location.pathname);
 }
