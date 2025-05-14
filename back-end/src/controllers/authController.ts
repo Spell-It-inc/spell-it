@@ -22,6 +22,9 @@ export class AuthController {
       })
     });
     const data = await response.json()
+    console.log(code)
+    console.log()
+    console.log(data)
     if (data.id_token) {
       res.status(200).json({data})
     } else {
