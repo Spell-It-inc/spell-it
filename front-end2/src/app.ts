@@ -1,8 +1,23 @@
-//SO like this is the home page login, we want to get a auth token and then exchange it for a jwt... so firstly let's create
-//the button that get's the auth token
 if (!window.location.hash) {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('code')) {
+    console.log(params.get('code'))
+    console.log(window.__ENV__.API_BASE_URL+'api/auth/signin')
+    const response = await fetch(window.__ENV__.API_BASE_URL+'api/auth/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({code:params.get('code')})
+    })
+    if(response.ok){
+      const jwt = await response.json();
+      sessionStorage.setItem('token', jwt.data.id_token)
+    }
+  }
+
   const signInButton = document.getElementById('google-login')
-  if (!sessionStorage.getItem('token')) {
+  if (sessionStorage.getItem('token') === undefined || sessionStorage.getItem('token') === null) { //NO TOKEN
     signInButton.innerHTML = "Login with google";
     signInButton.addEventListener('click', () => {
       const params = new URLSearchParams({
@@ -15,28 +30,22 @@ if (!window.location.hash) {
       });
       window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
     });
-  } else {
-    signInButton.innerHTML = "Proce.+.+"
+  } else { // THERE IS A TOKEN
+    const info = await fetch(window.__ENV__.API_BASE_URL+'api/auth/token-info', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({token:sessionStorage.getItem('token')})
+    })
+    const userInfo = await info.json()
+    document.getElementsByTagName('main')[0].innerHTML = 
+    `<h1>Welcome ${userInfo.name}</h1>
+    <button id="google-login">Proceed</button>`
   }
+  window.history.replaceState({}, document.title, window.location.pathname);
 }
-//The system then comesback with a code. BUT we need to exchange it for a token
-const params = new URLSearchParams(window.location.search);
-// console.log(params.get('code'))
-if (params.get('code')) {
-  console.log(params.get('code'))
-  console.log(window.__ENV__.API_BASE_URL+'api/auth/signin')
-  const response = await fetch(window.__ENV__.API_BASE_URL+'api/auth/signin', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({code:params.get('code')})
-  })
-  if(response.ok){
-    const jwt = await response.json();
-    sessionStorage.setItem('token', jwt.id_token)
-  }
-}
+
 
 export { };
 // const jwtToken = sessionStorage.getItem('jwt') ?? (params.get('code'))

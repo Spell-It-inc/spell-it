@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { OAuth2Client } from "google-auth-library";
+import { decodeJwt } from "jose";
 import dotenv from "dotenv";
 
 
@@ -22,13 +23,21 @@ export class AuthController {
       })
     });
     const data = await response.json()
-    console.log(code)
-    console.log()
-    console.log(data)
     if (data.id_token) {
       res.status(200).json({data})
     } else {
       res.status(500).json({error:"Failed to authenticate"})
+    }
+    return
+  }
+
+  static async getTokenInfo(req: Request, res: Response): Promise<void> {
+    const token = req.body
+    console.log(token)
+    try {
+      res.status(200).json(decodeJwt(token.token))
+    } catch (err) {
+      res.status(500).json({error:"Not a token"})
     }
     return
   }
