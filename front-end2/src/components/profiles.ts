@@ -1,5 +1,5 @@
 import { Component } from "../utils/types";
-import { Router } from "../utils/router.js"; // Assuming this is imported
+import { Router } from "../utils/router.js";
 
 export class ProfilesComponent implements Component {
   private profiles: any[] = [];
@@ -29,7 +29,7 @@ export class ProfilesComponent implements Component {
 
   async createProfile(username: string, ageGroupId: number): Promise<void> {
     const profileData = {
-      account_id: 1, // Example value for account_id
+      account_id: 1,
       username,
       age_group_id: ageGroupId
     };
@@ -45,8 +45,8 @@ export class ProfilesComponent implements Component {
 
     if (response.ok) {
       alert('Profile created successfully!');
-      await this.fetchProfiles(); // Reload profiles after creation
-      this.router.navigateTo('profiles'); // Redirect to profiles page
+      await this.fetchProfiles();
+      this.router.navigateTo('profiles');
     } else {
       alert('Failed to create profile');
     }

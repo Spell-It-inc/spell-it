@@ -14,15 +14,14 @@ if (!window.location.hash) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ code: params.get('code')})
+      body: JSON.stringify({code:params.get('code')})
     })
-    if (response.ok) {
+    if(response.ok){
       const jwt = await response.json();
       sessionStorage.setItem('token', jwt.data.id_token)
     }
   }
 
-  // Check if the user has a token, if not, show the login button
   if (sessionStorage.getItem('token') === undefined || sessionStorage.getItem('token') === null) { //NO TOKEN
     const signInButton = document.getElementById('google-login')
     signInButton.innerHTML = "Login with google";
