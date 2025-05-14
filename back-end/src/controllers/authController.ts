@@ -9,6 +9,7 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export class AuthController {
   static async handleGoogleLogin(req: Request, res: Response): Promise<void> {
+    console.log(process.env.REDIRECT_URI)
     const { code }= req.body;
     const response = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
