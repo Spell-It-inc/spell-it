@@ -21,7 +21,7 @@ export class AccountModel {
 
   static async create(authSub: string): Promise<Account> {
     const query =
-      "INSERT INTO accounts (auth_sub, created_at) VALUES ($1, NOW()) RETURNING account_id, auth_sub, created_at";
+      "INSERT INTO accounts (auth_sub) VALUES ($1) RETURNING account_id, auth_sub, created_at";
 
     const result = await pool.query(query, [authSub]);
     return result.rows[0];

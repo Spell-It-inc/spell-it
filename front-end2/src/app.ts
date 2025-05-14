@@ -1,3 +1,9 @@
+import { Router } from "./utils/router.js";
+import { HomeComponent } from "./components/home.js";
+
+const router = new Router('main')
+router.addRoute('home', new HomeComponent())
+
 if (!window.location.hash) {
   const params = new URLSearchParams(window.location.search);
   if (params.get('code')) {
@@ -16,8 +22,8 @@ if (!window.location.hash) {
     }
   }
 
-  const signInButton = document.getElementById('google-login')
   if (sessionStorage.getItem('token') === undefined || sessionStorage.getItem('token') === null) { //NO TOKEN
+    const signInButton = document.getElementById('google-login')
     signInButton.innerHTML = "Login with google";
     signInButton.addEventListener('click', () => {
       const params = new URLSearchParams({
@@ -41,36 +47,12 @@ if (!window.location.hash) {
     const userInfo = await info.json()
     document.getElementsByTagName('main')[0].innerHTML = 
     `<h1>Welcome ${userInfo.name}</h1>
-    <button id="google-login">Proceed</button>`
+    <a href="#" class="nav-link" data-route="home">Home</a>`
   }
   window.history.replaceState({}, document.title, window.location.pathname);
 }
 
-
-export { };
-// const jwtToken = sessionStorage.getItem('jwt') ?? (params.get('code'))
-// const hash = window.location.hash
-
-// if (authCode) {
-//   window.history.replaceState({}, document.title, window.location.pathname);
-//   sessionStorage.setItem('authToken', authCode)
-//   document.getElementById('google-login').innerHTML = "Proceed"
-// } else {
-//   //If no auth code can be found, setup to login
-  
-  // document.getElementById('google-login').addEventListener('click', () => {
-  //   const params = new URLSearchParams({
-  //     client_id: `${CLIENT_ID}.apps.googleusercontent.com`,
-  //     redirect_uri: REDIRECT_URI,
-  //     response_type: 'code',
-  //     scope: 'openid email profile',
-  //     access_type: 'offline',
-  //     prompt: 'consent'
-  //   });
-  //   window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
-//   });
-// }
-
-// console.log(hash)
-// console.log(params)
-// console.log(authCode)
+window.addEventListener("hashchange", () => {
+  const route = window.location.hash.substring(1) || "home";
+  router.navigateTo(route);
+});
