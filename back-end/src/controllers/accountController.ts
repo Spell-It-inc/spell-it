@@ -1,41 +1,33 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { AccountModel } from "../models/account";
+import { ensureExists, validateExistsInDB, validateId } from "../utils/validators";
 
 export class AccountController {
-  static async getAccountById(req: Request, res: Response) {
+  static async getAccountById(req: Request, res: Response, next: NextFunction) {
 
     try {
-      const accountId = parseInt(req.params.id);
+      const accountId = validateId(req.params.id, "Account ID");
 
-      if (isNaN(accountId) || accountId <= 0) {
-        res.status(400).json({ error: "Invalid Account ID" });
-      } else {
-        const account = await AccountModel.findById(accountId);
+      const account = ensureExists(await AccountModel.findById(accountId), "Account");
 
-        if (!account) {
-          res.status(404).json({ error: "Account not found" });
-        } else {
-          res.json(account);
-        }
-      }
+      res.json(account);
+
     } catch (error) {
-      res.status(500).json({ error: "Failed to fetch account" });
+      next(error);
     }
   }
 
-  static async getProfilesByAccountId(req: Request, res: Response) {
+  static async getProfilesByAccountId(req: Request, res: Response, next: NextFunction) {
     try {
-      const accountId = parseInt(req.params.id);
+      const accountId = validateId(req.params.id, "Account ID");
 
-      if (isNaN(accountId) || accountId <= 0) {
-        res.status(400).json({ error: "Invalid Account ID" });
-      } else {
-        const profiles = await AccountModel.findProfilesByAccountId(accountId);
+      await validateExistsInDB("accounts", "account_id", accountId, "Account");
+      const profile = await AccountModel.findProfilesByAccountId(accountId);
+      console.log(profile)
 
-        res.json(profiles);
-      }
+      res.json(profile);
     } catch (error) {
-      res.status(500).json({ error: "Failed to fetch account profiles" });
+      next(error);
     }
   }
 }

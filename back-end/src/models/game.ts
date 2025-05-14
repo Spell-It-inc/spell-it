@@ -3,9 +3,9 @@ import type { Game } from "../interfaces/game";
 
 export class GameModel {
     static async findAll(): Promise<Game[]> {
-        const query = 
+        const query =
             "SELECT game_id, name, description FROM games ORDER BY name";
-        
+
         const result = await pool.query(query);
         return result.rows
     }
@@ -41,7 +41,7 @@ export class GameModel {
         const query = `
             SELECT w.word_id, w.word
             FROM words w
-            INNER JOIN game_category gc ON gc.category_id = w.category_id
+            INNER JOIN game_categories gc ON gc.category_id = w.category_id
             WHERE gc.game_id = $1 AND gc.category_id = $2
             ORDER BY w.word
             LIMIT $3 OFFSET $4

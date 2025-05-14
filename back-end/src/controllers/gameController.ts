@@ -1,74 +1,56 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { GameModel } from "../models/game";
-import { error } from "console";
+import { ensureExists, validateExistsInDB, validateId } from "../utils/validators";
 
 export class GameController {
 
-    static async getAllGames(req: Request, res: Response) {
+    static async getAllGames(req: Request, res: Response, next: NextFunction) {
         try {
             const games = await GameModel.findAll();
 
             res.json(games)
         } catch (error) {
-            res.status(500).json({ error: "Failed to fetch games" })
+            next(error);
         }
     }
 
-    static async getGameById(req: Request, res: Response) {
+    static async getGameById(req: Request, res: Response, next: NextFunction) {
         try {
-            const gameId = parseInt(req.params.id);
+            const gameId = validateId(req.params.id, "Game ID");
 
-            if (isNaN(gameId) || gameId <= 0) {
-                res.status(400).json({ error: "Invalid Game Id" }); 
-            } else {
-                const game = await GameModel.findById(gameId);
+            const game = ensureExists(await GameModel.findById(gameId), "Game");
 
-                if (!game) {
-                    res.status(404).json({ error: "Game not found "});
-                } else {
-                    res.json(game);
-                }
-            }
+            res.json(game);
+
         } catch (error) {
-            res.status(500).json({ error: "Failed to fetch game" })
+            next(error);
         }
     }
 
-    static async getCategoriesForGame(req: Request, res: Response): Promise<void> {
+    static async getCategoriesForGame(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const gameId = parseInt(req.params.id);
+            const gameId = validateId(req.params.id, "Game ID");
 
-            if (isNaN(gameId) || gameId <= 0) {
-                res.status(400).json({ error: "Invalid Game Id"});
-                return;
-            }
-
-            const categories = await GameModel.findCategoriesForGame(gameId);
+            const categories = ensureExists(await GameModel.findCategoriesForGame(gameId), "Categories");
 
             res.json(categories);
 
-        } catch(error) {
-            res.status(500).json({ error: "Failed to fetch categories"})
-            return;
+        } catch (error) {
+            next(error);
         }
     }
 
-    static async getWordsForGameCategory(req: Request, res: Response): Promise<void> {
+    static async getWordsForGameCategory(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const gameId = parseInt(req.params.gameId);
-            const categoryId = parseInt(req.params.categoryId);
+            const gameId = validateId(req.params.gameId, "Game ID");
+            const categoryId = validateId(req.params.categoryId, "Category ID");
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 10;
 
-            if (isNaN(gameId) || isNaN(categoryId) || gameId <= 0 || categoryId <= 0) {
-                res.status(400).json({ error: "Invalid game or category ID" });
-                return;
-            }
-
-            const words = await GameModel.findWordsForGameCategory(gameId, categoryId, page, limit);
+            const words = ensureExists(await GameModel.findWordsForGameCategory(gameId, categoryId, page, limit), "Words");
             res.json(words);
         } catch (error) {
-            res.status(500).json({ error: "Failed to fetch words" });
+            next(error);
         }
     }
 }

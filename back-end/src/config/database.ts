@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 import dotenv from "dotenv";
 
-dotenv.config({ path: 'local.env' }); 
+dotenv.config({ path: 'local.env' });
 
 let _pool: Pool | null = null;
 
