@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ path: 'local.env' }); 
 
 let _pool: Pool | null = null;
 
@@ -18,8 +18,8 @@ export const getPool = (): Pool => {
         rejectUnauthorized: false, // for development
       },
     });
-
     // Log connection status
+    console.log("Connected Success")
     _pool.on("connect", () => {
       console.log("Connected to PostgreSQL database");
     });
