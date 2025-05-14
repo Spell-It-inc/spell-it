@@ -24,8 +24,8 @@ const params = new URLSearchParams(window.location.search);
 // console.log(params.get('code'))
 if (params.get('code')) {
   console.log(params.get('code'))
-  console.log(window.__ENV__.API_BASE_URL+'/api/auth/signin')
-  const response = await fetch(window.__ENV__.API_BASE_URL+'/api/auth/signin', {
+  console.log(window.__ENV__.API_BASE_URL+'api/auth/signin')
+  const response = await fetch(window.__ENV__.API_BASE_URL+'api/auth/signin', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
