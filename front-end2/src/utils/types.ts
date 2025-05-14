@@ -2,8 +2,7 @@ export {}
 
 declare global {
   interface Window {
-    handleCredentialResponse: (response: any) => void;
-    google: any; 
+    __ENV__: any
   }
 }
 
