@@ -4,30 +4,34 @@ import { ProfilesComponent } from "./components/profiles.js";
 const router = new Router('main');
 const profilesComponent = new ProfilesComponent(router);
 
+// Register routes
 router.addRoute('profiles', profilesComponent);
 router.addRoute('create-profile', {
   render: (container: HTMLElement) => profilesComponent.renderCreateProfileForm(container)
 });
 
+// Entry point logic
 if (!window.location.hash) {
   const params = new URLSearchParams(window.location.search);
+
+  // Handle Google OAuth callback
   if (params.get('code')) {
-    console.log(params.get('code'));
-    console.log(window.__ENV__.API_BASE_URL+'api/auth/signin');
-    const response = await fetch(window.__ENV__.API_BASE_URL+'api/auth/signin', {
+    const response = await fetch(`${window.__ENV__.API_BASE_URL}api/auth/signin`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({code:params.get('code')})
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: params.get('code') })
     });
-    if(response.ok){
+
+    if (response.ok) {
       const jwt = await response.json();
       sessionStorage.setItem('token', jwt.data.id_token);
     }
   }
 
-  if (sessionStorage.getItem('token') === undefined || sessionStorage.getItem('token') === null) {
+  const token = sessionStorage.getItem('token');
+
+  if (!token) {
+    // Not signed in: show login button
     const signInButton = document.getElementById('google-login');
     signInButton.innerHTML = "Login with Google";
     signInButton.addEventListener('click', () => {
@@ -42,26 +46,22 @@ if (!window.location.hash) {
       window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
     });
   } else {
-    const info = await fetch(window.__ENV__.API_BASE_URL+'api/auth/token-info', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({token:sessionStorage.getItem('token')})
-    });
-    const userInfo = await info.json();
-    
-    document.getElementsByTagName('main')[0].innerHTML = `
-      <h1>Welcome ${userInfo.name}</h1>
-      <p class="subtitle">Manage your young spellers’ profiles and cheer them on to success!</p>
-      <a href="#create-profile" class="cta-button">Create New Profile</a>
-      <a href="#profiles" class="cta-button">Go To Profile(s)</a>
-    `;
+    // Logged in: route to profiles page
+    window.location.hash = '#profiles';
   }
+
+  // Clean up query params from URL after handling auth
   window.history.replaceState({}, document.title, window.location.pathname);
 }
 
+// Listen for routing changes
 window.addEventListener("hashchange", () => {
   const route = window.location.hash.substring(1) || "profiles";
   router.navigateTo(route);
 });
+
+// Trigger initial route (in case user landed directly on a hash route)
+if (window.location.hash) {
+  const route = window.location.hash.substring(1);
+  router.navigateTo(route);
+}
