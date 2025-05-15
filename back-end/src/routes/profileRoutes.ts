@@ -5,7 +5,7 @@ import { verifyGoogleAuth } from "../middleware/verifyGoogleAuth";
 
 const router = Router();
 
-router.get("/", ProfileController.getAllProfiles);
+router.get("/", verifyGoogleAuth, ProfileController.getAllProfiles);
 router.get("/:id", ProfileController.getProfileById);
 router.post("/", verifyGoogleAuth, validateProfileData, ProfileController.createProfile);
 router.put("/:id", verifyGoogleAuth, validateProfileUpdateData, ProfileController.updateProfile);

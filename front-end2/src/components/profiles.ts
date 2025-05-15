@@ -1,9 +1,9 @@
+// src/components/profiles.ts
 import { Component } from "../utils/types";
-import { Router } from "../utils/router.js";
+import { Router } from "../utils/router";
 
 export class ProfilesComponent implements Component {
   private profiles: any[] = [];
-  private createProfileButton: HTMLElement | null = null;
   private router: Router;
 
   constructor(router: Router) {
@@ -11,24 +11,31 @@ export class ProfilesComponent implements Component {
   }
 
   async fetchProfiles(): Promise<void> {
-    const response = await fetch(`${window.__ENV__.API_BASE_URL}api/profiles`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-      }
-    });
+    try {
+      const token = sessionStorage.getItem('token');
+      const response = await fetch(`${window.__ENV__.API_BASE_URL}api/profiles`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
 
-    if (response.ok) {
-      const data = await response.json();
-      this.profiles = data;
-      this.renderProfiles();
-    } else {
-      console.error('Failed to fetch profiles');
+      if (response.ok) {
+        const data = await response.json();
+        this.profiles = data;
+        this.renderProfiles();
+      } else {
+        const error = await response.json();
+        console.error('Failed to fetch profiles:', error.message || response.statusText);
+      }
+    } catch (err) {
+      console.error('Network error fetching profiles:', err);
     }
   }
 
   async createProfile(username: string, ageGroupId: number): Promise<void> {
     const profileData = {
+      account_id: 1,
       username,
       age_group_id: ageGroupId
     };
@@ -42,41 +49,41 @@ export class ProfilesComponent implements Component {
       body: JSON.stringify(profileData)
     });
 
-   const data = await response.json();  // <-- parse JSON here
-
-
-   if (response.ok) {
-    console.log("✅ Profile created successfully:", data);  // Log success response
-    alert('Profile created successfully!');
-    await this.fetchProfiles();
-    this.router.navigateTo('profiles');
+    if (response.ok) {
+      await this.fetchProfiles();
+      this.router.navigateTo('profiles');
     } else {
-    console.error("❌ Backend error response:", data);  // Log error response
-    alert('Failed to create profile');
+      alert('Failed to create profile');
     }
   }
 
   renderCreateProfileForm(container: HTMLElement): void {
     container.innerHTML = `
-      <section class="profile-form">
-        <header>
-          <h2>Create New Profile</h2>
-        </header>
-        <form id="profile-form">
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username" required />
-          
-          <label for="age-group">Age Group:</label>
-          <select id="age-group" name="age_group_id" required>
-            <option value="1">4-6</option>
-            <option value="2">7-9</option>
-            <option value="3">10-12</option>
-            <option value="4">13-17</option>
-          </select>
-          
-          <button type="submit" id="submit-profile-btn">Create Profile</button>
-        </form>
-      </section>
+      <main>
+        <section class="profile-form">
+          <header>
+            <h2>Create New Profile</h2>
+          </header>
+          <form id="profile-form">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" id="username" name="username" required />
+            </div>
+            
+            <div class="form-group">
+              <label for="age-group">Age Group</label>
+              <select id="age-group" name="age_group_id" required>
+                <option value="1">4-6 years</option>
+                <option value="2">7-9 years</option>
+                <option value="3">10-12 years</option>
+                <option value="4">13+ years</option>
+              </select>
+            </div>
+            
+            <button type="submit" class="cta-button">Create Profile</button>
+          </form>
+        </section>
+      </main>
     `;
 
     const form = container.querySelector("#profile-form");
@@ -102,53 +109,35 @@ export class ProfilesComponent implements Component {
   renderProfiles(): void {
     const profilesList = document.querySelector("#profiles-list");
     if (profilesList) {
+      if (this.profiles.length === 0) {
+        profilesList.innerHTML = `
+          <p class="text-center">No profiles yet. <a href="#create-profile">Create your first profile</a></p>
+        `;
+        return;
+      }
+
       profilesList.innerHTML = this.profiles
         .map(profile => `
-          <article class="profile-card">
-            <header>
-              <h3>${profile.username}</h3>
-            </header>
-            <p>Age Group: ${profile.age_group_id}</p>
-            <button class="view-rewards-btn" data-profile-id="${profile.profile_id}">View Rewards</button>
-          </article>
+          <a href="#session/${profile.profile_id}" class="profile-card">
+            <h3>${profile.username}</h3>
+          </a>
         `)
         .join('');
-
-      document.querySelectorAll('.view-rewards-btn').forEach(button => {
-        button.addEventListener("click", async (e: Event) => {
-          const profileId = (e.target as HTMLElement).dataset.profileId;
-          if (profileId) {
-            const response = await fetch(`${window.__ENV__.API_BASE_URL}api/profiles/${profileId}/rewards`, {
-              method: 'GET',
-              headers: {
-                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-              }
-            });
-            const rewards = await response.json();
-            alert(`Rewards for ${rewards.username}: ${rewards.rewards.map((r: any) => r.name).join(', ')}`);
-          }
-        });
-      });
     }
   }
 
   async render(container: HTMLElement): Promise<void> {
     container.innerHTML = `
-      <main class="profiles-page">
+      <main>
         <header>
-          <h1>Your Profiles</h1>
+          <h1>Pick Your Player!</h1>
+          <p class="subtitle">Get ready to become a spelling superstar! 🌟</p>
         </header>
-        <button id="create-profile-btn" class="cta-button">Create New Profile</button>
-        <section id="profiles-list"></section>
+        <section id="profiles-list">
+          <div class="loading">Loading profiles...</div>
+        </section>
       </main>
     `;
-
-    this.createProfileButton = container.querySelector("#create-profile-btn");
-    if (this.createProfileButton) {
-      this.createProfileButton.addEventListener("click", () => {
-        this.renderCreateProfileForm(container);
-      });
-    }
 
     await this.fetchProfiles();
   }
