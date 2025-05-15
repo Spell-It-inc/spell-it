@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Arial Rounded MT Bold', sans-serif;
+  font-family: "Arial Rounded MT Bold", sans-serif;
   background: linear-gradient(to top right, #b0d6c9, #e8eaf6);
   display: flex;
   justify-content: center;
@@ -14,7 +14,7 @@ main {
   width: 90%;
   max-width: 380px;
   padding: 2rem;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
@@ -45,7 +45,7 @@ select {
   border: none;
   border-radius: 10px;
   background: #fff;
-  box-shadow: inset 0 0 4px rgba(0,0,0,0.05);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.05);
 }
 
 .google-btn {
@@ -65,4 +65,20 @@ select {
 
 .google-btn img {
   height: 18px;
+}
+
+/* Profiles */
+
+.profile-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
 }

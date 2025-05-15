@@ -118,7 +118,7 @@ export class ProfilesComponent implements Component {
 
       profilesList.innerHTML = this.profiles
         .map(profile => `
-          <a href="#session/${profile.profile_id}" class="profile-card">
+          <a href="#profile/${profile.profile_id}" class="profile-card">
             <h3>${profile.username}</h3>
           </a>
         `)

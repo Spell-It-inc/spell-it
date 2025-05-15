@@ -25,6 +25,11 @@ export class Router {
   }
 
   public navigateTo(route: string): void {
+    if (route.startsWith("profile/")) {
+      this.renderComponent("profile");
+
+      return;
+    }
     if (!this.routes.has(route)) {
       console.error(`Route "${route}" not found`)
       return
