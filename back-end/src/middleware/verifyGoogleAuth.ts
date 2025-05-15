@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from "express";
 import { OAuth2Client } from "google-auth-library";
 import { AccountModel } from "../models/account";
 
-dotenv.config({ path: "../local.env" });
+dotenv.config({ path: "local.env" });
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
