@@ -16,7 +16,7 @@ export class ProfileController {
 
   static async getProfileById(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const profileId = validateId(req.params.id, "profile ID");
+      const profileId = validateId(req.params.id, "Profile ID");
 
       const profile = ensureExists(await ProfileModel.findById(profileId), "Profile");
       res.json(profile);
@@ -53,7 +53,7 @@ export class ProfileController {
 
   static async updateProfile(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const profileId = validateId(req.params.id, "profile ID");
+      const profileId = validateId(req.params.id, "Profile ID")
 
       const existingProfile = ensureExists(await ProfileModel.findById(profileId), "Profile");
 
@@ -80,12 +80,24 @@ export class ProfileController {
 
   static async getEarnedRewards(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const profileId = validateId(req.params.id, "profile ID");
+      const profileId = validateId(req.params.id, "Profile ID");
 
       const rewards = ensureExists(await ProfileModel.findEarnedRewardsByProfileId(profileId), "Profile");
 
       res.json(rewards);
     } catch (error: any) {
+      next(error);
+    }
+  }
+
+  public static async getProfileSessionLogs(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const profileId = validateId(req.params.id, "Profile ID");
+
+      const sessionLogs = ensureExists(await ProfileModel.findSessionLogByProfileId(profileId), "Session logs");
+
+      res.json(sessionLogs);
+    } catch (error) {
       next(error);
     }
   }

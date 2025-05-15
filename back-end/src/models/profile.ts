@@ -1,5 +1,5 @@
 import { pool } from "../config/database";
-import type { Profile, ProfileRewards } from "../interfaces/profile";
+import type { Profile, ProfileRewards, ProfileSessionLogs } from "../interfaces/profile";
 
 export class ProfileModel {
   static async findAll(): Promise<Profile[]> {
@@ -96,4 +96,12 @@ export class ProfileModel {
       };
     }
   }
+
+  static async findSessionLogByProfileId(id: number): Promise<ProfileSessionLogs[] | null> {
+    const query = "SELECT * FROM view_session_logs WHERE profile_id = $1";
+
+    const result = await pool.query(query, [id]);
+    return result.rows || null;
+  }
+
 }
