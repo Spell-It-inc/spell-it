@@ -1,12 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "../errors/AppError";
-import { validateId, validatePresence } from "../utils/validators";
+import { validateId, validatePresence, validateRequestBodyExists } from "../utils/validators";
 
 export function validateWordData(req: Request, res: Response, next: NextFunction): void {
     try {
-        if (!req.body || typeof req.body !== "object") {
-            throw new AppError("Request body is missing or malformed", 400, true);
-        }
+        validateRequestBodyExists(req.body);
 
         const { category_id, word } = req.body;
 
@@ -18,8 +16,6 @@ export function validateWordData(req: Request, res: Response, next: NextFunction
         }
 
         const categoryId = validateId(category_id, "category_id");
-
-
         next();
     } catch (error) {
         next(error);
