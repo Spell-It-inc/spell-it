@@ -9,7 +9,7 @@ CREATE TABLE profiles(
   account_id INT NOT NULL,
   username VARCHAR UNIQUE NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT fk_account_id FOREIGN KEY(account_id) REFERENCES accounts(account_id),
+  CONSTRAINT fk_account_id FOREIGN KEY(account_id) REFERENCES accounts(account_id)
 );
 
 CREATE TABLE categories(
