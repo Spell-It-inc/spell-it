@@ -29,7 +29,7 @@ export class ProfileModel {
   }): Promise<Profile> {
     const query = `
             INSERT INTO profiles (account_id, username, created_at)
-            VALUES ($1, $2, CURRENT_TIMESTAMP())
+            VALUES ($1, $2, NOW())
             RETURNING *
         `;
     const values = [
