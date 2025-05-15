@@ -15,3 +15,4 @@ export class WordModel {
     return result.rows[0];
   }
 }
+
