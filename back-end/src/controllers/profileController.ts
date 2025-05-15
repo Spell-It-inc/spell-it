@@ -47,7 +47,7 @@ export class ProfileController {
       }
 
       const { username } = req.body;
-
+      console.log(username)
       const profile = await ProfileModel.create({
         account_id: accountId,
         username: username.trim(),
