@@ -1,9 +1,14 @@
 import { Router } from "./utils/router.js";
 import { ProfilesComponent } from "./components/profiles.js";
 import { ProfileComponent } from "./components/profile.js";
+import { GameComponent } from "./components/game.js";
+import { CategoriesComponent } from "./components/categories.js";
 
 const router = new Router('main');
 const profilesComponent = new ProfilesComponent(router);
+
+router.addRoute('games',new CategoriesComponent)
+router.addRoute('game',new GameComponent)
 
 router.addRoute('profiles', profilesComponent);
 router.addRoute('profile', new ProfileComponent());

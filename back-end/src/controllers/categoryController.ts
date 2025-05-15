@@ -21,7 +21,7 @@ export class CategoryController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const categoryId = validateId(req.params.id, "Categori ID");
+      const categoryId = validateId(req.params.id, "Category ID");
       const page = parseInt(req.query.page as string) || 1;
       const limit = parseInt(req.query.limit as string) || 3;
 

@@ -26,6 +26,7 @@ export class Router {
 
   public navigateTo(route: string): void {
     if (route.startsWith("profile/")) {
+      this.container.innerHTML =''
       this.renderComponent("profile");
 
       return;

@@ -179,3 +179,93 @@ select {
   gap: 0.5rem;
   margin-top: auto;
 }
+
+
+button {
+  background-color: #b0d6c9;
+  border-radius: 25px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  width: 45%;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: 0.5s;
+}
+
+button:hover,
+button:focus {
+  background-color: #4b8a79;
+}
+
+
+.letter-container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  list-style-type: none;
+  display: flex;
+    flex-wrap: wrap;
+  justify-content: center;
+  background-color: #e8eaf6;
+  border-radius: 10px
+}
+
+.letter {
+  background-color: #a0cdc1;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin: 0.1rem;
+  transition: 0.5s;
+}
+
+.space {
+  opacity: 0.3;
+}
+
+.moveable {
+  background-color: orange;
+}
+.moveable:hover {
+  opacity: 0.5;
+}
+
+.category-container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  list-style-type: none;
+  display: flex;
+    flex-wrap: wrap;
+  justify-content: center;
+  background-color: #e8eaf6;
+  border-radius: 10px
+}
+
+.category {
+  background-color: orange;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin: 0.1rem;
+  transition: 0.2s;
+  opacity: 0.5;
+}
+
+.category:hover {
+  opacity: 1;
+}
