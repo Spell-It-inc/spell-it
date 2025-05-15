@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import { Router } from "express";
 
-dotenv.config({ path: "../local.env" })
+dotenv.config({ path: "local.env" })
 
 export const validateGoogleProfile = async (
     req: Request,

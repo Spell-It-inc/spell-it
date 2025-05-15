@@ -1,14 +1,12 @@
 import type { Request, Response } from "express";
-import { OAuth2Client } from "google-auth-library";
-import { decodeJwt } from "jose";
 import dotenv from "dotenv";
+import { decode } from "jsonwebtoken"
 import { AccountModel } from "../models/account";
 import { error } from "console";
+import { JsonWebTokenError } from "jsonwebtoken";
 
 
 dotenv.config({ path: "local.env" });
-
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export class AuthController {
   static async handleGoogleLogin(req: Request, res: Response): Promise<void> {
@@ -27,8 +25,8 @@ export class AuthController {
       });
       const data = await response.json()
       if (data.id_token) {// Check if user exists in DB
-        const userInfo = decodeJwt(data.id_token)
-        if (userInfo.sub) {
+        const userInfo = decode(data.id_token)
+        if (userInfo && userInfo.sub && typeof userInfo.sub === "string") {
           let account = await AccountModel.findByAuthSub(userInfo.sub);
           if (!account) {
             console.log("Creating new account...");
@@ -47,9 +45,10 @@ export class AuthController {
   }
 
   static async getTokenInfo(req: Request, res: Response): Promise<void> {
-    const token = req.body
+    const token = req.body.token
+    const userInfo = decode(token)
     try {
-      res.status(200).json(decodeJwt(token.token))
+      res.status(200).json(userInfo)
     } catch (err) {
       res.status(404).json({ error: "Not a valid token" })
     }

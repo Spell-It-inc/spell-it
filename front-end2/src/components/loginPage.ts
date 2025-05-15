@@ -14,6 +14,8 @@ export class LoginComponent implements Component {
                 container.innerHTML = `<button id="google-login">Sign in with google</button>`
                 initLogin();
             } else { //They are already logged in
+                console.log("Already logged in")
+                console.log("Token: ", sessionStorage.getItem('token'))
                 getTokenInfo().then(info => {
                     container.innerHTML = welcomeMessage(info)
                     initLogoutButton();
@@ -52,6 +54,7 @@ function initLogin(): void {
 }
 
 function initLogoutButton(): void {
+    console.log("initLogoutButton")
     const signOutButton = document.getElementById('signout-button')
     signOutButton.addEventListener('click', () => {
         signout()

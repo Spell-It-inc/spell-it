@@ -47,6 +47,6 @@ export async function getTokenInfo() {
 }
 
 export function signout() {
-    sessionStorage.removeItem('token');
-    window.location.reload()
+    // sessionStorage.removeItem('token');
+    // window.location.reload()
 }

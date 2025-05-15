@@ -12,9 +12,9 @@ main {
   background-color: #fef9f6;
   border-radius: 25px;
   width: 90%;
-  max-width: 380px;
+  max-width: 75%;
   padding: 2rem;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
@@ -45,7 +45,7 @@ select {
   border: none;
   border-radius: 10px;
   background: #fff;
-  box-shadow: inset 0 0 4px rgba(0,0,0,0.05);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.05);
 }
 
 .profile-photo {
@@ -64,7 +64,7 @@ button {
   font-size: 14px;
   font-weight: 500;
   height: 40px;
-  width: 40%;
+  width: 45%;
   line-height: 20px;
   list-style: none;
   margin: 0;
@@ -84,4 +84,35 @@ button {
 button:hover,
 button:focus {
   background-color: #4b8a79;
+}
+
+
+.letter-container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  list-style-type: none;
+  display: flex;
+    flex-wrap: wrap;
+  justify-content: center;
+  background-color: #e8eaf6;
+  border-radius: 10px
+}
+
+.letter {
+  background-color: #a0cdc1;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin: 0.1rem;
+  transition: 0.5s;
+}
+
+.space {
+  opacity: 0.3;
+}
+
+.moveable {
+  background-color: orange;
+}
+.moveable:hover {
+  opacity: 0.5;
 }

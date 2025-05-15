@@ -14,10 +14,12 @@ const app: Express = express();
 
 app.use(express.json());
 
-app.use(cors({
-  origin: process.env.REDIRECT_URI,
-  credentials: true
-}));
+// app.use(cors({
+//   origin: process.env.REDIRECT_URI,
+//   credentials: true
+// }));
+
+app.use(cors());
 
 // app.use('/api', validateGoogleProfile);
 app.use("/ping", pingRoute)
