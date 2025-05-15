@@ -1,7 +1,7 @@
 import { Router } from "../utils/router.js";
 
 interface Profile {
-  id: string;
+  profile_id: string;
   username: string;
   age_group: string;
 }
@@ -77,19 +77,19 @@ export class ProfilesComponent {
     }
 
     listSection!.innerHTML = this.profiles.map(p => `
-      <button class="profile-card" data-id="${p.id}" aria-label="View profile for ${p.username}">
+      <a class="profile-card" href="#profile/${p.profile_id}" aria-label="View profile for ${p.username}">
         ${p.username}
-      </button>
+      </a>
     `).join("");
 
-    listSection!.querySelectorAll('.profile-card').forEach(button => {
-      button.addEventListener('click', (e) => {
-        const id = (e.currentTarget as HTMLElement).dataset.id;
-        if (id) {
-          this.router.navigateTo(`profile/${id}`);
-        }
-      });
-    });
+    // listSection!.querySelectorAll('.profile-card').forEach(button => {
+    //   button.addEventListener('click', (e) => {
+    //     const id = (e.currentTarget as HTMLElement).dataset.id;
+    //     if (id) {
+    //       this.router.navigateTo(`#profile/${id}`);
+    //     }
+    //   });
+    // });
   }
 
   renderCreateProfileForm(container: HTMLElement) {
