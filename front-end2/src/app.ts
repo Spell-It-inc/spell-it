@@ -4,17 +4,14 @@ import { ProfilesComponent } from "./components/profiles.js";
 const router = new Router('main');
 const profilesComponent = new ProfilesComponent(router);
 
-// Register routes
 router.addRoute('profiles', profilesComponent);
 router.addRoute('create-profile', {
   render: (container: HTMLElement) => profilesComponent.renderCreateProfileForm(container)
 });
 
-// Entry point logic
 if (!window.location.hash) {
   const params = new URLSearchParams(window.location.search);
 
-  // Handle Google OAuth callback
   if (params.get('code')) {
     const response = await fetch(`${window.__ENV__.API_BASE_URL}api/auth/signin`, {
       method: 'POST',
@@ -31,7 +28,6 @@ if (!window.location.hash) {
   const token = sessionStorage.getItem('token');
 
   if (!token) {
-    // Not signed in: show login button
     const signInButton = document.getElementById('google-login');
     signInButton.innerHTML = "Login with Google";
     signInButton.addEventListener('click', () => {
@@ -46,21 +42,17 @@ if (!window.location.hash) {
       window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
     });
   } else {
-    // Logged in: route to profiles page
     window.location.hash = '#profiles';
   }
 
-  // Clean up query params from URL after handling auth
   window.history.replaceState({}, document.title, window.location.pathname);
 }
 
-// Listen for routing changes
 window.addEventListener("hashchange", () => {
   const route = window.location.hash.substring(1) || "profiles";
   router.navigateTo(route);
 });
 
-// Trigger initial route (in case user landed directly on a hash route)
 if (window.location.hash) {
   const route = window.location.hash.substring(1);
   router.navigateTo(route);
