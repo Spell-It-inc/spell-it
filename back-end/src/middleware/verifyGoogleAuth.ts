@@ -1,14 +1,16 @@
+// middleware/verifyGoogleAuth.ts
+
 import dotenv from "dotenv";
 import { Request, Response, NextFunction } from "express";
 import { OAuth2Client } from "google-auth-library";
 import { AccountModel } from "../models/account";
 
-dotenv.config({ path: "../local.env" })
+dotenv.config({ path: "../local.env" });
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export interface AuthenticatedRequest extends Request {
-  user?: { account_id: number };
+  user?: { account_id: number }; // attach account_id here
 }
 
 export const verifyGoogleAuth = async (
