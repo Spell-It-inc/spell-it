@@ -3,6 +3,7 @@ import type { Component } from "./types"
 export class Router {
   private routes: Map<string, Component>
   private container: HTMLElement | null
+  private defaultComponent: Component | null
 
   constructor(containerId: string) {
     this.routes = new Map()
@@ -14,6 +15,29 @@ export class Router {
         this.renderComponent(e.state.route)
       }
     })
+
+    window.addEventListener("DOMContentLoaded", () => {
+      this.checkRouting()
+    })
+
+    window.addEventListener("hashchange", () => {
+      this.checkRouting()
+    })
+  }
+
+  private checkRouting(): void {
+    if (window.location.hash) {
+      const route = window.location.hash.substring(1);
+      this.navigateTo(route)
+    } else {
+      if (this.defaultComponent) {
+        this.container.innerHTML = ``
+        this.defaultComponent.render(this.container)
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } else {
+        this.container.innerHTML = `No Page Set `
+      }
+    }
   }
 
   public addRoute(route: string, component: Component): void {
@@ -22,6 +46,10 @@ export class Router {
 
   public hasRoute(route: string): boolean {
     return this.routes.has(route)
+  }
+
+  public addDefault(component: Component): void {
+    this.defaultComponent = component
   }
 
   public navigateTo(route: string): void {

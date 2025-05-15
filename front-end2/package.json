@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "npm i && npx tsc && cp src/index.html dist/ && cp src/styles.css dist/ && cp -r src/assets dist/assets && cp src/favicon.ico dist/ && cp -r public dist/public",
-    "local": "npm i && npx tsc && cp src/index.html dist/ && cp src/styles.css dist/ && cp -r src/assets dist/assets && cp src/favicon.ico dist/ && cp -r public dist/public && npx http-server dist"
+    "local": "rm -rf dist && npm i && npx tsc && cp src/index.html dist/ && cp src/styles.css dist/ && cp -r src/assets dist/assets && cp src/favicon.ico dist/ && cp -r public dist/public && npx http-server dist"
   },
   "dependencies": {
     "dotenv": "^16.5.0",
