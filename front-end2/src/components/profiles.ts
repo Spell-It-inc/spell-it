@@ -76,27 +76,21 @@ export class ProfilesComponent {
       return;
     }
 
-    listSection!.innerHTML = `
-      <ul>
-        ${this.profiles.map(p => `
-          <li>
-            <a href="#" data-id="${p.id}" class="profile-link">${p.username}</a>
-          </li>
-        `).join('')}
-      </ul>
-    `;
+    listSection!.innerHTML = this.profiles.map(p => `
+      <button class="profile-card" data-id="${p.id}" aria-label="View profile for ${p.username}">
+        ${p.username}
+      </button>
+    `).join("");
 
-  // Attach click listeners to each profile link
-  listSection!.querySelectorAll('.profile-link').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const id = (e.currentTarget as HTMLElement).dataset.id;
-      if (id) {
-        this.router.navigateTo(`profile/${id}`);
-      }
+    listSection!.querySelectorAll('.profile-card').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const id = (e.currentTarget as HTMLElement).dataset.id;
+        if (id) {
+          this.router.navigateTo(`profile/${id}`);
+        }
+      });
     });
-  });
-}
+  }
 
   renderCreateProfileForm(container: HTMLElement) {
     container.innerHTML = `
