@@ -46,60 +46,16 @@ export class ProfileController {
         return;
       }
 
-      const { username, age_group_id } = req.body;
-      const ageGroupId = parseInt(age_group_id);
-
-      // Validate age_group_id exists in DB
-      await validateExistsInDB("age_groups", "age_group_id", ageGroupId, "Age group");
+      const { username } = req.body;
 
       const profile = await ProfileModel.create({
         account_id: accountId,
         username: username.trim(),
-        age_group_id: ageGroupId,
       });
 
       res.status(201).json(profile);
     } catch (error: any) {
       next(handleDatabaseError(error));
-    }
-  }
-
-  static async updateProfile(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
-    try {
-      const profileId = validateId(req.params.id, "Profile ID")
-
-      const existingProfile = ensureExists(await ProfileModel.findById(profileId), "Profile");
-
-      const { username, age_group_id } = req.body;
-      const updateData: { username?: string; age_group_id?: number } = {};
-
-      if (username !== undefined) {
-        updateData.username = username.trim();
-      }
-
-      if (age_group_id !== undefined) {
-        const ageGroupIdNum = parseInt(age_group_id);
-        await validateExistsInDB("age_groups", "age_group_id", ageGroupIdNum, "Age group");
-        updateData.age_group_id = ageGroupIdNum;
-      }
-
-      const profile = await ProfileModel.update(profileId, updateData);
-
-      res.json(profile);
-    } catch (error: any) {
-      next(handleDatabaseError(error));
-    }
-  }
-
-  static async getEarnedRewards(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
-    try {
-      const profileId = validateId(req.params.id, "Profile ID");
-
-      const rewards = ensureExists(await ProfileModel.findEarnedRewardsByProfileId(profileId), "Profile");
-
-      res.json(rewards);
-    } catch (error: any) {
-      next(error);
     }
   }
 
