@@ -11,6 +11,7 @@
   --color-secondary: #72bfc7; /* Cool blue/teal (secondary elements) */
   --color-accent: #ef3349; /* Bold red (for emphasis or alerts) */
   --color-success: #4aa378; /* Positive green (success states) */
+  --color-success-light: #53af82; /* Light green (success states) */
   --shadow: #1a1a1a1a; /* Soft shadow for depth */
 
   /* Typography Colors */
@@ -98,7 +99,7 @@ select {
 
 /* General | Utilities */
 .btn {
-  background-color: #4b8a79;
+  background-color: var(--color-primary);
   color: #fff;
   border: none;
   border-radius: 0.5rem;
@@ -106,6 +107,9 @@ select {
   cursor: pointer;
   transition: all 0.3s ease-in;
   outline: none;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 600;
 
   &:hover {
     transform: scale(1.05);
@@ -113,12 +117,9 @@ select {
 }
 
 .btn-cancel {
-  background-color: #f44336;
+  background-color: var(--color-accent);
 }
 
-input {
-  text-align: center;
-}
 /* Categories */
 .categories {
   display: flex;
@@ -129,8 +130,8 @@ input {
 }
 
 .category {
-  background-color: #4b8a79;
-  color: #fff;
+  background-color: var(--color-success);
+  color: var(--text-on-primary);
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
@@ -138,7 +139,7 @@ input {
   transition: all 0.3s ease-in;
 
   &:hover {
-    background-color: #3a6b5c;
+    background-color: var(--color-success-light);
     transform: scale(1.05);
   }
 }
@@ -152,6 +153,10 @@ input {
   }
 }
 
+.words-count-container{
+  padding : 0.5rem 0 1rem;
+}
+
 .quiz-actions {
   padding-top: 1rem;
   gap: 1rem;
@@ -160,9 +165,11 @@ input {
 }
 
 .words-count {
-  border-color: #4b8a79;
-  border: 2px solid #4b8a79;
+  border-color: var(--color-success);
+  border: 2px solid var(--color-success);
   border-radius: 0.5rem;
   padding: 0.5rem;
   font-weight: 600;
+  text-align: center;
+  font-size: 1.25rem;
 }

@@ -15,7 +15,7 @@ export class CategoryComponent implements Component {
           categoryElement.innerHTML = `
                 <h2>${category.name}</h2>
                 <section class="words-count-container">
-                <p>How many words do you want for the quiz?</p>
+                <p>How many words do you want for the game?</p>
                 <p>
                     <input type="number"
                      id="words-count" min="${category.pagination.itemCount}" max="${category.pagination.totalItems}" value="${category.pagination.itemCount}" 
@@ -24,7 +24,7 @@ export class CategoryComponent implements Component {
                 </section>
                 <section class="quiz-actions">
                     <button class="btn btn-cancel" id="cancel">Cancel</button>
-                    <button class="btn btn-primary" id="start-quiz">Start Quiz</button>
+                    <button class="btn btn-primary" id="start-quiz">Play</button>
                 </section>
                 `;
 
