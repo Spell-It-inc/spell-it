@@ -7,12 +7,25 @@ import { AuthenticatedRequest } from "../middleware/verifyGoogleAuth";
 export class ProfileController {
   static async getAllProfiles(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const profiles = await ProfileModel.findAll();
+      const accountId = req.user?.account_id;
+
+      if (!accountId) {
+        res.status(401).json({ message: "Unauthorized: account ID missing" });
+        return;
+      }
+
+      const profiles = await ProfileModel.findAll({
+        where: {
+          account_id: accountId
+        }
+      });
+
       res.json(profiles);
     } catch (error) {
       next(error);
     }
   }
+
 
   static async getProfileById(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {

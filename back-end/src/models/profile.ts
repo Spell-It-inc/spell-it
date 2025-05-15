@@ -2,9 +2,18 @@ import { pool } from "../config/database";
 import type { Profile, ProfileRewards } from "../interfaces/profile";
 
 export class ProfileModel {
-  static async findAll(): Promise<Profile[]> {
-    const query = "SELECT * FROM profiles ORDER BY created_at DESC";
-    const result = await pool.query(query);
+  static async findAll(filter?: { where?: { account_id?: number } }): Promise<Profile[]> {
+    let query = "SELECT * FROM profiles";
+    const values: any[] = [];
+
+    if (filter?.where?.account_id !== undefined) {
+      query += " WHERE account_id = $1";
+      values.push(filter.where.account_id);
+    }
+
+    query += " ORDER BY created_at DESC";
+
+    const result = await pool.query(query, values);
     return result.rows;
   }
 
