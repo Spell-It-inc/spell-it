@@ -7,6 +7,7 @@ export class CategoriesComponent implements Component {
         <h1>Choose A Category</h1>
 
         <section class="categories">
+          loading categories...
         </section>
       </section>
     `;

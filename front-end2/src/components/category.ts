@@ -15,8 +15,8 @@ export class CategoryComponent implements Component {
           categoryElement.innerHTML = `
                 <h2>${category.name}</h2>
                 <section class="words-count-container">
+                <p>How many words do you want for the quiz?</p>
                 <p>
-                <label for="words-count">Words Count:</label>
                     <input type="number"
                      id="words-count" min="${category.pagination.itemCount}" max="${category.pagination.totalItems}" value="${category.pagination.itemCount}" 
                      class="words-count" />
