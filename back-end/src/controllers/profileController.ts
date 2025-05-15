@@ -1,21 +1,35 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import { ProfileModel } from "../models/profile";
-import { ensureExists, validateExistsInDB, validateId, validatePresence } from "../utils/validators";
+import { ensureExists, validateExistsInDB, validateId } from "../utils/validators";
 import { handleDatabaseError } from "../utils/handleDatabaseError";
+import { AuthenticatedRequest } from "../middleware/verifyGoogleAuth";
 
 export class ProfileController {
-  static async getAllProfiles(req: Request, res: Response, next: NextFunction): Promise<void> {
+  static async getAllProfiles(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const profiles = await ProfileModel.findAll();
+      const accountId = req.user?.account_id;
+
+      if (!accountId) {
+        res.status(401).json({ message: "Unauthorized: account ID missing" });
+        return;
+      }
+
+      const profiles = await ProfileModel.findAll({
+        where: {
+          account_id: accountId
+        }
+      });
+
       res.json(profiles);
     } catch (error) {
       next(error);
     }
   }
 
-  static async getProfileById(req: Request, res: Response, next: NextFunction): Promise<void> {
+
+  static async getProfileById(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const profileId = validateId(req.params.id, "profile ID");
+      const profileId = validateId(req.params.id, "Profile ID");
 
       const profile = ensureExists(await ProfileModel.findById(profileId), "Profile");
       res.json(profile);
@@ -24,15 +38,18 @@ export class ProfileController {
     }
   }
 
-  static async createProfile(req: Request, res: Response, next: NextFunction): Promise<void> {
+  static async createProfile(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { account_id, username, age_group_id } = req.body;
+      const accountId = req.user?.account_id;
+      if (!accountId) {
+        res.status(401).json({ message: "Unauthorized: no account_id found" });
+        return;
+      }
 
-      const accountId = parseInt(account_id);
+      const { username, age_group_id } = req.body;
       const ageGroupId = parseInt(age_group_id);
 
-      //check database existence
-      await validateExistsInDB("accounts", "account_id", accountId, "Account");
+      // Validate age_group_id exists in DB
       await validateExistsInDB("age_groups", "age_group_id", ageGroupId, "Age group");
 
       const profile = await ProfileModel.create({
@@ -47,11 +64,10 @@ export class ProfileController {
     }
   }
 
-  static async updateProfile(req: Request, res: Response, next: NextFunction): Promise<void> {
+  static async updateProfile(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const profileId = validateId(req.params.id, "id")
+      const profileId = validateId(req.params.id, "Profile ID")
 
-      // Check if profile exists before updating
       const existingProfile = ensureExists(await ProfileModel.findById(profileId), "Profile");
 
       const { username, age_group_id } = req.body;
@@ -71,22 +87,30 @@ export class ProfileController {
 
       res.json(profile);
     } catch (error: any) {
-      next(handleDatabaseError(error))
+      next(handleDatabaseError(error));
     }
   }
 
-  public static async getEarnedRewards(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
+  static async getEarnedRewards(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const profileId = validateId(req.params.id, "profile_id")
+      const profileId = validateId(req.params.id, "Profile ID");
 
       const rewards = ensureExists(await ProfileModel.findEarnedRewardsByProfileId(profileId), "Profile");
 
       res.json(rewards);
     } catch (error: any) {
+      next(error);
+    }
+  }
+
+  public static async getProfileSessionLogs(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const profileId = validateId(req.params.id, "Profile ID");
+
+      const sessionLogs = ensureExists(await ProfileModel.findSessionLogByProfileId(profileId), "Session logs");
+
+      res.json(sessionLogs);
+    } catch (error) {
       next(error);
     }
   }

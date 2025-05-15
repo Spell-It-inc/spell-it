@@ -1,10 +1,19 @@
 import { pool } from "../config/database";
-import type { Profile, ProfileRewards } from "../interfaces/profile";
+import type { Profile, ProfileRewards, ProfileSessionLogs } from "../interfaces/profile";
 
 export class ProfileModel {
-  static async findAll(): Promise<Profile[]> {
-    const query = "SELECT * FROM profiles ORDER BY created_at DESC";
-    const result = await pool.query(query);
+  static async findAll(filter?: { where?: { account_id?: number } }): Promise<Profile[]> {
+    let query = "SELECT * FROM profiles";
+    const values: any[] = [];
+
+    if (filter?.where?.account_id !== undefined) {
+      query += " WHERE account_id = $1";
+      values.push(filter.where.account_id);
+    }
+
+    query += " ORDER BY created_at DESC";
+
+    const result = await pool.query(query, values);
     return result.rows;
   }
 
@@ -96,4 +105,12 @@ export class ProfileModel {
       };
     }
   }
+
+  static async findSessionLogByProfileId(id: number): Promise<ProfileSessionLogs[] | null> {
+    const query = "SELECT * FROM view_session_logs WHERE profile_id = $1";
+
+    const result = await pool.query(query, [id]);
+    return result.rows || null;
+  }
+
 }
