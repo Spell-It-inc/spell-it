@@ -1,10 +1,13 @@
 import { Router } from "./utils/router.js";
 import { ProfilesComponent } from "./components/profiles.js";
+import { HomeComponent } from "./components/home.js";
+import { SessionLogsComponent } from "./components/sessionLogs.js";
 
-const router = new Router('main');
+const router = new Router('main')
 const profilesComponent = new ProfilesComponent(router);
-
-router.addRoute('profiles', profilesComponent);
+router.addRoute('home', new HomeComponent());
+router.addRoute('sessionLogs', new SessionLogsComponent());
+router.addRoute('profiles', new ProfilesComponent(router));
 router.addRoute('create-profile', {
   render: (container: HTMLElement) => profilesComponent.renderCreateProfileForm(container)
 });
@@ -12,16 +15,16 @@ router.addRoute('create-profile', {
 if (!window.location.hash) {
   const params = new URLSearchParams(window.location.search);
   if (params.get('code')) {
-    console.log(params.get('code'));
-    console.log(window.__ENV__.API_BASE_URL+'api/auth/signin');
-    const response = await fetch(window.__ENV__.API_BASE_URL+'api/auth/signin', {
+    console.log(params.get('code'))
+    console.log(window.__ENV__.API_BASE_URL + 'api/auth/signin')
+    const response = await fetch(window.__ENV__.API_BASE_URL + 'api/auth/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({code:params.get('code')})
+      body: JSON.stringify({ code: params.get('code') })
     });
-    if(response.ok){
+    if (response.ok) {
       const jwt = await response.json();
       sessionStorage.setItem('token', jwt.data.id_token);
     }
@@ -42,15 +45,15 @@ if (!window.location.hash) {
       window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
     });
   } else {
-    const info = await fetch(window.__ENV__.API_BASE_URL+'api/auth/token-info', {
+    const info = await fetch(window.__ENV__.API_BASE_URL + 'api/auth/token-info', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({token:sessionStorage.getItem('token')})
+      body: JSON.stringify({ token: sessionStorage.getItem('token') })
     });
     const userInfo = await info.json();
-    
+
     document.getElementsByTagName('main')[0].innerHTML = `
       <h1>Welcome ${userInfo.name}</h1>
       <p class="subtitle">Manage your young spellers’ profiles and cheer them on to success!</p>

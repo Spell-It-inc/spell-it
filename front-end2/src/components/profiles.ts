@@ -90,7 +90,7 @@ export class ProfilesComponent implements Component {
     if (form) {
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
-        
+
         const usernameInput = form.querySelector("#username") as HTMLInputElement;
         const ageGroupSelect = form.querySelector("#age-group") as HTMLSelectElement;
 
