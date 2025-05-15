@@ -5,9 +5,9 @@ import { verifyGoogleAuth } from "../middleware/verifyGoogleAuth";
 
 const router = Router();
 
-router.get("/", ProfileController.getAllProfiles);
+router.get("/", verifyGoogleAuth, ProfileController.getAllProfiles);
 router.get("/:id", ProfileController.getProfileById);
-router.post("/", ProfileController.createProfile);
+router.post("/", verifyGoogleAuth, validateProfileData, ProfileController.createProfile);
 router.get("/:id/session-logs", ProfileController.getProfileSessionLogs);
 
 export default router;
