@@ -1,7 +1,7 @@
 import { Router } from "../utils/router.js";
 
 interface Profile {
-  id: string;
+  profile_id: string;
   username: string;
   age_group: string;
 }
@@ -77,19 +77,10 @@ export class ProfilesComponent {
     }
 
     listSection!.innerHTML = this.profiles.map(p => `
-      <button class="profile-card" data-id="${p.id}" aria-label="View profile for ${p.username}">
+      <a class="profile-card" href="#profile/${p.profile_id}" aria-label="View profile for ${p.username}">
         ${p.username}
-      </button>
+      </a>
     `).join("");
-
-    listSection!.querySelectorAll('.profile-card').forEach(button => {
-      button.addEventListener('click', (e) => {
-        const id = (e.currentTarget as HTMLElement).dataset.id;
-        if (id) {
-          this.router.navigateTo(`profile/${id}`);
-        }
-      });
-    });
   }
 
   renderCreateProfileForm(container: HTMLElement) {
@@ -100,15 +91,6 @@ export class ProfilesComponent {
           <label for="username">Username</label>
           <input type="text" id="username" name="username" required />
         </div>
-        <div class="form-group">
-          <label for="age-group">Age Group</label>
-          <select id="age-group" name="age_group_id" required>
-            <option value="1">4-6 years</option>
-            <option value="2">7-9 years</option>
-            <option value="3">10-12 years</option>
-            <option value="4">13+ years</option>
-          </select>
-        </div>
         <button type="submit" class="cta-button">Submit</button>
       </form>
     `;
@@ -118,11 +100,9 @@ export class ProfilesComponent {
       e.preventDefault();
 
       const usernameInput = form.querySelector('#username') as HTMLInputElement;
-      const ageGroupSelect = form.querySelector('#age-group') as HTMLSelectElement;
 
       const profile = {
         username: usernameInput.value.trim(),
-        age_group_id: parseInt(ageGroupSelect.value)
       };
 
       const response = await fetch(`${window.__ENV__.API_BASE_URL}api/profiles`, {

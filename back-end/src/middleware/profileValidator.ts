@@ -10,16 +10,13 @@ export const validateProfileData = async (
   try {
     validateRequestBodyExists(req.body);
 
-    const { username, age_group_id } = req.body;
+    const { username } = req.body;
 
     validatePresence(username, "username");
-    validatePresence(age_group_id, "age_group_id");
 
     if (typeof username !== "string" || username.trim().length === 0) {
       throw new AppError("'username' must be a non-empty string", 400, true);
     }
-
-    validateId(age_group_id, "age_group_id");
 
     next();
   } catch (error) {
@@ -35,16 +32,12 @@ export const validateProfileUpdateData = async (
   try {
     validateRequestBodyExists(req.body);
 
-    const { username, age_group_id } = req.body;
+    const { username } = req.body;
 
     if (username !== undefined) {
       if (typeof username !== "string" || username.trim().length === 0) {
         throw new AppError("'username' must be a non-empty string", 400, true);
       }
-    }
-
-    if (age_group_id !== undefined) {
-      validateId(age_group_id, "age_group_id");
     }
 
     next();

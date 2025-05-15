@@ -12,7 +12,7 @@
   --color-accent: #ef3349; /* Bold red (for emphasis or alerts) */
   --color-success: #4aa378; /* Positive green (success states) */
   --shadow: #1a1a1a1a; /* Soft shadow for depth */
-
+  
   /* Typography Colors */
   --text-primary: #1b1b1b; /* Main text (very dark gray/black) */
   --text-secondary: #3a3a3a; /* Supporting text (dark gray) */
@@ -30,21 +30,21 @@ body {
     to top right,
     var(--color-secondary),
     var(--color-base)
-  );
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100dvh;
-}
-
-main {
-  background-color: var(--color-base);
-  border-radius: 25px;
-  width: 90vw;
-  max-width: 1100px;
-  padding: 2rem;
-  box-shadow: 0 8px 16px var(--shadow);
-  text-align: center;
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100dvh;
+  }
+  
+  main {
+    background-color: var(--color-base);
+    border-radius: 25px;
+    width: 90vw;
+    max-width: 1100px;
+    padding: 2rem;
+    box-shadow: 0 8px 16px var(--shadow);
+    text-align: center;
 }
 
 header {
@@ -59,6 +59,15 @@ h1 {
   font-size: 2rem;
   color: var(--color-success);
   margin: 0.5rem 0;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-primary);
 }
 
 .subtitle {
@@ -97,6 +106,7 @@ select {
 }
 
 
+/* Profiles */
 #profiles-list {
   display: flex;
   flex-wrap: wrap;
@@ -153,4 +163,19 @@ select {
     flex: 1 1 100%;
     max-width: 100%;
   }
+}
+
+
+.profile-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
 }

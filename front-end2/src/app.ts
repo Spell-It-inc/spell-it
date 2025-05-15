@@ -1,10 +1,12 @@
 import { Router } from "./utils/router.js";
 import { ProfilesComponent } from "./components/profiles.js";
+import { ProfileComponent } from "./components/profile.js";
 
 const router = new Router('main');
 const profilesComponent = new ProfilesComponent(router);
 
 router.addRoute('profiles', profilesComponent);
+router.addRoute('profile', new ProfileComponent());
 router.addRoute('create-profile', {
   render: (container: HTMLElement) => profilesComponent.renderCreateProfileForm(container)
 });
