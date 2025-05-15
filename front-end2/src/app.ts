@@ -1,8 +1,8 @@
 import { Router } from "./utils/router.js";
-import { HomeComponent } from "./components/home.js";
+import { ProfilesComponent } from "./components/profiles.js";
 
 const router = new Router('main')
-router.addRoute('home', new HomeComponent())
+router.addRoute('profiles', new ProfilesComponent(router));
 
 if (!window.location.hash) {
   const params = new URLSearchParams(window.location.search);
@@ -43,16 +43,19 @@ if (!window.location.hash) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({token:sessionStorage.getItem('token')})
-    })
-    const userInfo = await info.json()
-    document.getElementsByTagName('main')[0].innerHTML = 
-    `<h1>Welcome ${userInfo.name}</h1>
-    <a href="#" class="nav-link" data-route="home">Home</a>`
+    });
+    const userInfo = await info.json();
+
+    document.getElementsByTagName('main')[0].innerHTML = `
+      <h1>Welcome ${userInfo.name}</h1>
+      <p class="subtitle">Manage your child's profiles and help them learn to spell.</p>
+      <a href="#" class="nav-link" data-route="profiles">Go to Your Profile(s)</a>
+    `;
   }
   window.history.replaceState({}, document.title, window.location.pathname);
 }
 
 window.addEventListener("hashchange", () => {
-  const route = window.location.hash.substring(1) || "home";
+  const route = window.location.hash.substring(1) || "profiles";
   router.navigateTo(route);
 });
