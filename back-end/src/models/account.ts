@@ -29,7 +29,7 @@ export class AccountModel {
 
   static async findProfilesByAccountId(id: number): Promise<Profile[]> {
     const query =
-      "SELECT profile_id, account_id, username, age_group_id, created_at FROM profiles WHERE account_id = $1";
+      "SELECT profile_id, account_id, username, created_at FROM profiles WHERE account_id = $1";
 
     const result = await pool.query(query, [id]);
     return result.rows;

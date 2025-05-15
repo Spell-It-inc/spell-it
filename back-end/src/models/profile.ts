@@ -26,56 +26,20 @@ export class ProfileModel {
   static async create(profileData: {
     account_id: number;
     username: string;
-    age_group_id: number;
   }): Promise<Profile> {
     const query = `
-            INSERT INTO profiles (account_id, username, age_group_id, created_at)
-            VALUES ($1, $2, $3, CURRENT_TIMESTAMP)
+            INSERT INTO profiles (account_id, username, created_at)
+            VALUES ($1, $2, CURRENT_TIMESTAMP)
             RETURNING *
         `;
     const values = [
       profileData.account_id,
-      profileData.username,
-      profileData.age_group_id,
+      profileData.username
     ];
     const result = await pool.query(query, values);
     return result.rows[0];
   }
-
-  static async update(
-    id: number,
-    profileData: Partial<Pick<Profile, "username" | "age_group_id">>
-  ): Promise<Profile | null> {
-    const updates: string[] = [];
-    const values: any[] = [];
-    let parameterIndex = 1;
-
-    if (profileData.username !== undefined) {
-      updates.push(`username = $${parameterIndex}`);
-      values.push(profileData.username);
-      parameterIndex++;
-    }
-
-    if (profileData.age_group_id !== undefined) {
-      updates.push(`age_group_id = $${parameterIndex}`);
-      values.push(profileData.age_group_id);
-      parameterIndex++;
-    }
-
-    if (updates.length === 0) return this.findById(id);
-
-    values.push(id);
-    const query = `
-            UPDATE profiles 
-            SET ${updates.join(", ")}
-            WHERE profile_id = $${parameterIndex}
-            RETURNING *
-        `;
-
-    const result = await pool.query(query, values);
-    return result.rows[0] || null;
-  }
-
+  
   static async findEarnedRewardsByProfileId(
     id: number
   ): Promise<ProfileRewards | null> {

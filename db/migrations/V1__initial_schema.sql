@@ -4,20 +4,12 @@ CREATE TABLE accounts(
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE age_groups(
-  age_group_id SERIAL PRIMARY KEY,
-  minimum_age INT NOT NULL,
-  maximum_age INT NOT NULL
-);
-
 CREATE TABLE profiles(
   profile_id SERIAL PRIMARY KEY,
   account_id INT NOT NULL,
   username VARCHAR UNIQUE NOT NULL,
-  age_group_id INT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT fk_account_id FOREIGN KEY(account_id) REFERENCES accounts(account_id),
-  CONSTRAINT fk_age_group_id FOREIGN KEY(age_group_id) REFERENCES age_groups(age_group_id)
+  CONSTRAINT fk_account_id FOREIGN KEY(account_id) REFERENCES accounts(account_id)
 );
 
 CREATE TABLE categories(
@@ -58,19 +50,4 @@ CREATE TABLE session_logs(
   CONSTRAINT fk_profile_id FOREIGN KEY(profile_id) REFERENCES profiles(profile_id),
   CONSTRAINT fk_game_id FOREIGN KEY(game_id) REFERENCES games(game_id),
   CONSTRAINT fk_category_id FOREIGN KEY(category_id) REFERENCES categories(category_id)
-);
-
-CREATE TABLE rewards(
-  reward_id SERIAL PRIMARY KEY,
-  name VARCHAR NOT NULL,
-  description VARCHAR NOT NULL
-);
-
-CREATE TABLE earned_rewards(
-  earned_reward_id SERIAL PRIMARY KEY,
-  profile_id INT,
-  reward_id INT,
-  earned_at TIMESTAMP,
-  CONSTRAINT fk_profile_id FOREIGN KEY(profile_id) REFERENCES profiles(profile_id),
-  CONSTRAINT fk_reward_id FOREIGN KEY(reward_id) REFERENCES rewards(reward_id)
 );
