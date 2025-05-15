@@ -95,3 +95,62 @@ select {
 .google-btn img {
   height: 18px;
 }
+
+
+#profiles-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.profile-card {
+  flex: 1 1 calc(33.333% - 1rem);
+  max-width: 140px;
+  min-width: 100px;
+  aspect-ratio: 1;
+  background: #d3ede4;
+  border: none;
+  border-radius: 15px;
+  font-family: 'Arial Rounded MT Bold', sans-serif;
+  font-size: 1rem;
+  color: #32695e;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  transition: transform 0.2s ease;
+  word-break: break-word;
+}
+
+.profile-card:hover {
+  transform: scale(1.05);
+}
+
+#create-profile-button.button {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 0.8rem 1.2rem;
+  background-color: #4b8a79;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+#create-profile-button.button:hover {
+  background-color: #3b7264;
+}
+
+@media (max-width: 768px) {
+  .profile-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
