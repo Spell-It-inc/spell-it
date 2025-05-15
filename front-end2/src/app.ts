@@ -7,7 +7,11 @@ import { SessionLogsComponent } from "./components/sessionLogs.js";
 const router = new Router('main')
 const profilesComponent = new ProfilesComponent(router);
 router.addRoute('home', new HomeComponent());
-router.addRoute('sessionLogs', new SessionLogsComponent());
+router.addRoute("session-logs", {
+  render: (container: HTMLElement, param?: string) => {
+    new SessionLogsComponent().render(container, param);
+  }
+});
 router.addRoute('profiles', new ProfilesComponent(router));
 router.addRoute('profile', new ProfileComponent());
 router.addRoute('create-profile', {

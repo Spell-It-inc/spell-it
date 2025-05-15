@@ -3,9 +3,17 @@ import type { Component } from "../utils/types";
 export class SessionLogsComponent implements Component {
   private logs: any[] = [];
   private containerEl: HTMLElement | null = null;
+  private profileId: number | null = null;
 
-  async render(container: HTMLElement): Promise<void> {
+  async render(container: HTMLElement, param?: string): Promise<void> {
     this.containerEl = container;
+
+    if (!param) {
+      container.innerHTML = `<p class="error">Missing profile ID.</p>`;
+      return;
+    }
+
+    this.profileId = parseInt(param);
 
     container.innerHTML = `
       <div class="page session-logs-page">
@@ -27,27 +35,25 @@ export class SessionLogsComponent implements Component {
 
     try {
       const token = sessionStorage.getItem("token");
-
       if (!token) {
         this.showError("Please log in and select a profile to see your adventures!");
         return;
       }
 
-      const response = await fetch(`${window.__ENV__.API_BASE_URL}api/profiles/1/session-logs`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+      const response = await fetch(`${window.__ENV__.API_BASE_URL}api/profiles/${this.profileId}/session-logs`, {
+        headers: { Authorization: `Bearer ${token}` }
       });
 
       if (!response.ok) throw new Error("Failed to fetch session logs");
 
       this.logs = await response.json();
-      this.renderAllLogs(); // Render everything at once
+      this.renderAllLogs();
     } catch (error) {
       console.error(error);
       this.showError("Oops! Something went wrong loading your logs. 😢");
     }
   }
+
 
   private renderAllLogs() {
     const grid = this.containerEl?.querySelector("#logs-grid");
