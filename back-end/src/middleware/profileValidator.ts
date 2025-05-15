@@ -8,7 +8,7 @@ export const validateProfileData = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    validateRequestBodyExists(req.body);
+    validateRequestBodyExists(req.body)
 
     const { username, age_group_id } = req.body;
 
@@ -33,7 +33,7 @@ export const validateProfileUpdateData = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    validateRequestBodyExists(req.body);
+    validateRequestBodyExists(req.body)
 
     const { username, age_group_id } = req.body;
 
@@ -51,4 +51,4 @@ export const validateProfileUpdateData = async (
   } catch (error) {
     next(error);
   }
-};
+}

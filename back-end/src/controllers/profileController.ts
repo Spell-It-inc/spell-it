@@ -36,7 +36,6 @@ export class ProfileController {
       const { username, age_group_id } = req.body;
       const ageGroupId = parseInt(age_group_id);
 
-      // Validate age_group_id exists in DB
       await validateExistsInDB("age_groups", "age_group_id", ageGroupId, "Age group");
 
       const profile = await ProfileModel.create({
@@ -53,7 +52,7 @@ export class ProfileController {
 
   static async updateProfile(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const profileId = validateId(req.params.id, "profile ID");
+      const profileId = validateId(req.params.id, "profile_id");
 
       const existingProfile = ensureExists(await ProfileModel.findById(profileId), "Profile");
 
@@ -74,13 +73,13 @@ export class ProfileController {
 
       res.json(profile);
     } catch (error: any) {
-      next(handleDatabaseError(error));
+      next(handleDatabaseError(error))
     }
   }
 
   static async getEarnedRewards(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const profileId = validateId(req.params.id, "profile ID");
+      const profileId = validateId(req.params.id, "profile_id");
 
       const rewards = ensureExists(await ProfileModel.findEarnedRewardsByProfileId(profileId), "Profile");
 
