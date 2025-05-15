@@ -8,5 +8,3 @@ ALTER TABLE words ADD CONSTRAINT uk_words_category_word UNIQUE(category_id, word
 ALTER TABLE games ADD CONSTRAINT uk_games_game UNIQUE(game_id);
 
 ALTER TABLE profiles ADD CONSTRAINT uk_profile_username UNIQUE(profile_id);
-
-ALTER TABLE rewards ADD CONSTRAINT uk_rewards_reward UNIQUE(name);
