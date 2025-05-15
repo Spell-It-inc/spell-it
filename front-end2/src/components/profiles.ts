@@ -29,7 +29,6 @@ export class ProfilesComponent implements Component {
 
   async createProfile(username: string, ageGroupId: number): Promise<void> {
     const profileData = {
-      account_id: 1,
       username,
       age_group_id: ageGroupId
     };
@@ -43,12 +42,17 @@ export class ProfilesComponent implements Component {
       body: JSON.stringify(profileData)
     });
 
-    if (response.ok) {
-      alert('Profile created successfully!');
-      await this.fetchProfiles();
-      this.router.navigateTo('profiles');
+   const data = await response.json();  // <-- parse JSON here
+
+
+   if (response.ok) {
+    console.log("✅ Profile created successfully:", data);  // Log success response
+    alert('Profile created successfully!');
+    await this.fetchProfiles();
+    this.router.navigateTo('profiles');
     } else {
-      alert('Failed to create profile');
+    console.error("❌ Backend error response:", data);  // Log error response
+    alert('Failed to create profile');
     }
   }
 
@@ -67,7 +71,7 @@ export class ProfilesComponent implements Component {
             <option value="1">4-6</option>
             <option value="2">7-9</option>
             <option value="3">10-12</option>
-            <option value="4">13+</option>
+            <option value="4">13-17</option>
           </select>
           
           <button type="submit" id="submit-profile-btn">Create Profile</button>

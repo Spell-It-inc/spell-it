@@ -8,7 +8,6 @@ import sessionLogRoutes from "./routes/sessionLogRoutes";
 import { errorHandler } from "./middleware/errorHandler";
 import gameRoutes from "./routes/gameRoutes";
 import cors from "cors";
-import { validateGoogleProfile } from "./middleware/verifyGoogleAuth";
 import { PingController } from "./controllers/pingController";
 import pingRoute from "./routes/pingRoute";
 
