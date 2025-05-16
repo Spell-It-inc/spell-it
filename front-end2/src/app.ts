@@ -49,12 +49,23 @@ if (!window.location.hash) {
     const loginSection = document.createElement('section');
     loginSection.className = 'login-section';
 
-    const loginTitle = document.createElement('h1');
-    loginTitle.className = 'login-title';
-    const titleText = document.createTextNode('Spell-It');
+    const addLogo = document.createElement('img');
+    addLogo.src = './assets/spell-it-logo.png';
+    addLogo.alt = 'Google logo';
+    addLogo.className = 'logo';
+    loginSection.appendChild(addLogo);
 
+    const loginTitle = document.createElement('h1');
+    loginTitle.className = 'app-title';
+    const titleText = document.createTextNode('Spell-It');
     loginTitle.appendChild(titleText);
     loginSection.appendChild(loginTitle);
+
+    const welcomeMessage = document.createElement('p');
+    const message = document.createTextNode('Learn to spell, one word at a time');
+    welcomeMessage.className = 'app-tagline';
+    welcomeMessage.appendChild(message);
+    loginSection.appendChild(welcomeMessage);
     
     const signInButton = document.createElement('button');
     signInButton.id = 'google-login';

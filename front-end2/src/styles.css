@@ -68,54 +68,8 @@ body {
 }
 
 /* Logo and Title Styling */
-.logo-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
 .logo {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 0.5rem;
-  perspective: 1000px;
-}
-
-.logo span {
-  display: inline-block;
-  font-size: 3.5rem;
-  font-weight: bold;
-  margin: 0 -0.1rem;
-  transform-style: preserve-3d;
-  position: relative;
-}
-
-.letter-a {
-  color: var(--color-primary);
-  transform: rotateY(-15deg);
-  animation: float 3s ease-in-out infinite;
-}
-
-.letter-b {
-  color: var(--color-secondary);
-  transform: translateY(-5px);
-  animation: float 3s ease-in-out infinite 0.5s;
-}
-
-.letter-c {
-  color: var(--color-success);
-  transform: rotateY(15deg);
-  animation: float 3s ease-in-out infinite 1s;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) rotate(0);
-  }
-  50% {
-    transform: translateY(-8px) rotate(3deg);
-  }
+  width: 30%
 }
 
 .app-title {
@@ -472,10 +426,6 @@ button:focus {
   padding-top: 2rem;
   margin: auto;
   overflow-y: hidden;
-}
-
-.login-title{
-  padding: 0 1rem;
 }
 
 @container main-container (min-width: 600px) {
