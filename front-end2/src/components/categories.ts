@@ -3,27 +3,26 @@ import { getAllCategories } from "../utils/categories.js"
 
 export class CategoriesComponent implements Component {
     async render(container: HTMLElement): Promise<void> {
-        container.innerHTML = `
-        <h1>Please Select A Category</h1>
-        <ul class = "categories">
-        ${await generateCategories()}
-        </ul>`
+        const h1 = document.createElement('h1');
+        h1.textContent = 'Please Select A Category';
+        container.appendChild(h1);
 
-        const categories = document.querySelectorAll('.category')
-        categories.forEach((element: HTMLElement) => {
-            element.addEventListener('click', (e) => {
-                sessionStorage.setItem('category', (element).dataset.id)
+        const ul = document.createElement('ul');
+        ul.className = 'categories';
+        
+        const categories = await getAllCategories();
+        categories.forEach(category => {
+            const li = document.createElement('li');
+            li.className = 'category';
+            li.dataset.id = category.category_id;
+            li.textContent = category.name;
+            li.addEventListener('click', () => {
+                sessionStorage.setItem('category', category.category_id);
                 window.location.hash = "#game";
-            })
+            });
+            ul.appendChild(li);
         });
+        
+        container.appendChild(ul);
     }
-}
-
-async function generateCategories() {
-    const categories = await getAllCategories()
-    let generatedOutcome = ``
-    categories.forEach(category => {
-        generatedOutcome += `<li class="category" data-id = "${category.category_id}">${category.name}</li>`
-    })
-    return generatedOutcome
 }

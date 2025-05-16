@@ -9,24 +9,49 @@ export class SessionLogsComponent implements Component {
     this.containerEl = container;
 
     if (!param) {
-      container.innerHTML = `<p class="error">Missing profile ID.</p>`;
+      const errorP = document.createElement('p');
+      errorP.className = 'error';
+      errorP.textContent = 'Missing profile ID.';
+      container.appendChild(errorP);
       return;
     }
 
     this.profileId = parseInt(param);
+    container.replaceChildren();
 
-    container.innerHTML = `
-      <div class="page session-logs-page">
-        <h1>🕹️ Your Game Adventures!</h1>
-        <p>Here's a list of games you've played. Great job!</p>
-        <div id="session-logs-list" class="logs-container">
-          <div class="logs-grid" id="logs-grid"></div>
-        </div>
-        <div style="text-align:center; margin: 2rem 0;">
-        <a id="play-game-button" href="#games">🎯 Play Game</a>
-        </div>
-      </div>
-    `;
+    const pageDiv = document.createElement('div');
+    pageDiv.className = 'page session-logs-page';
+
+    const title = document.createElement('h1');
+    title.textContent = '🕹️ Your Game Adventures!';
+    pageDiv.appendChild(title);
+
+    const subtitle = document.createElement('p');
+    subtitle.textContent = "Here's a list of games you've played. Great job!";
+    pageDiv.appendChild(subtitle);
+
+    const logsContainer = document.createElement('div');
+    logsContainer.id = 'session-logs-list';
+    logsContainer.className = 'logs-container';
+
+    const logsGrid = document.createElement('div');
+    logsGrid.className = 'logs-grid';
+    logsGrid.id = 'logs-grid';
+    logsContainer.appendChild(logsGrid);
+    pageDiv.appendChild(logsContainer);
+
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.textAlign = 'center';
+    buttonContainer.style.margin = '2rem 0';
+
+    const playGameLink = document.createElement('a');
+    playGameLink.id = 'play-game-button';
+    playGameLink.href = '#games';
+    playGameLink.textContent = '🎯 Play Game';
+    buttonContainer.appendChild(playGameLink);
+    pageDiv.appendChild(buttonContainer);
+
+    container.appendChild(pageDiv);
 
     try {
       const token = sessionStorage.getItem("token");
@@ -49,35 +74,60 @@ export class SessionLogsComponent implements Component {
     }
   }
 
-
   private renderAllLogs() {
     const grid = this.containerEl?.querySelector("#logs-grid");
     if (!grid) return;
 
-    grid.innerHTML = ""; // Clear previous logs
+    grid.replaceChildren();
 
     if (this.logs.length === 0) {
-      grid.innerHTML = "<p>No logs available.</p>";
+      const noLogsMsg = document.createElement('p');
+      noLogsMsg.textContent = 'No logs available.';
+      grid.appendChild(noLogsMsg);
       return;
     }
 
     this.logs.forEach(log => {
-      const logHTML = document.createElement("div");
-      logHTML.className = "log-entry";
-      logHTML.innerHTML = `
-        <h3>🎮 ${log.game_name}</h3>
-        <p><strong>Category:</strong> ${log.category_name}</p>
-        <p><strong>Score:</strong> ⭐ ${log.score}</p>
-        <p><strong>Date:</strong> ${new Date(log.started_at).toLocaleDateString()}</p>
-      `;
-      grid.appendChild(logHTML);
+      const logEntry = document.createElement('div');
+      logEntry.className = 'log-entry';
+
+      const title = document.createElement('h3');
+      title.textContent = `🎮 ${log.game_name}`;
+      logEntry.appendChild(title);
+
+      const categoryP = document.createElement('p');
+      const categoryStrong = document.createElement('strong');
+      categoryStrong.textContent = 'Category: ';
+      categoryP.appendChild(categoryStrong);
+      categoryP.appendChild(document.createTextNode(log.category_name));
+      logEntry.appendChild(categoryP);
+
+      const scoreP = document.createElement('p');
+      const scoreStrong = document.createElement('strong');
+      scoreStrong.textContent = 'Score: ';
+      scoreP.appendChild(scoreStrong);
+      scoreP.appendChild(document.createTextNode(`⭐ ${log.score}`));
+      logEntry.appendChild(scoreP);
+
+      const dateP = document.createElement('p');
+      const dateStrong = document.createElement('strong');
+      dateStrong.textContent = 'Date: ';
+      dateP.appendChild(dateStrong);
+      dateP.appendChild(document.createTextNode(new Date(log.started_at).toLocaleDateString()));
+      logEntry.appendChild(dateP);
+
+      grid.appendChild(logEntry);
     });
   }
 
   private showError(message: string) {
     const logsContainer = this.containerEl?.querySelector("#session-logs-list");
     if (logsContainer) {
-      logsContainer.innerHTML = `<p class="error">${message}</p>`;
+      logsContainer.replaceChildren();
+      const errorP = document.createElement('p');
+      errorP.className = 'error';
+      errorP.textContent = message;
+      logsContainer.appendChild(errorP);
     }
   }
 }

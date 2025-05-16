@@ -3,35 +3,62 @@ import { Component } from "../utils/types";
 export class ProfileComponent implements Component {
   async render(container: HTMLElement): Promise<void> {
     const profileId = window.location.hash.split("/")[1];
-    sessionStorage.setItem('profile_id', profileId)
-    container.innerHTML = `
-        <header>
-          <h1>Profile</h1>
-        </header>
-        <section class="profile-details">
-        </section>
-    `;
+    sessionStorage.setItem("profile_id", profileId);
+
+    const header = document.createElement("header");
+    const h1 = document.createElement("h1");
+    h1.textContent = "Profile";
+    header.appendChild(h1);
+    container.appendChild(header);
+
+    const profileDetailsSection = document.createElement("section");
+    profileDetailsSection.className = "profile-details";
+    container.appendChild(profileDetailsSection);
 
     const profile = await this.fetchProfile(parseInt(profileId));
 
-    const profileElement = container.querySelector(".profile-details");
-    if (profileElement) {
+    if (profileDetailsSection) {
       const joinedDate = new Date(profile.created_at);
       const month = joinedDate.toLocaleString("en-US", { month: "long" });
       const year = joinedDate.getFullYear();
-      profileElement.innerHTML = `
-                <p>Username: <strong>${profile.username}</strong></p>
-                <p>Joined <strong>${month} ${year}</strong></p>
-                `;
+
+      const usernamePara = document.createElement("p");
+      const usernameLabel = document.createTextNode("Username: ");
+      const usernameStrong = document.createElement("strong");
+      usernameStrong.textContent = profile.username;
+      usernamePara.appendChild(usernameLabel);
+      usernamePara.appendChild(usernameStrong);
+
+      const joinedPara = document.createElement("p");
+      const joinedLabel = document.createTextNode("Joined ");
+      const joinedStrong = document.createElement("strong");
+      joinedStrong.textContent = `${month} ${year}`;
+      joinedPara.appendChild(joinedLabel);
+      joinedPara.appendChild(joinedStrong);
+
+      profileDetailsSection.appendChild(usernamePara);
+      profileDetailsSection.appendChild(joinedPara);
     }
 
     const navigation = document.createElement("ul");
     navigation.className = "profile-navigation";
-    navigation.innerHTML = `
-            <li><a class="btn" href="#session-logs/${profile.profile_id}">View Sessions</a></li>
-            <li><a class="btn" href="#games">Play A Game</a></li>
-        `;
 
+    const sessionLogItem = document.createElement("li");
+    const sessionLogLink = document.createElement("a");
+    sessionLogLink.className = "btn";
+    sessionLogLink.href = `#session-logs/${profile.profile_id}`;
+    sessionLogLink.textContent = "View Sessions";
+    sessionLogItem.appendChild(sessionLogLink);
+
+    const gamesItem = document.createElement("li");
+    const gamesLink = document.createElement("a");
+    gamesLink.className = "btn";
+    gamesLink.href = "#games";
+    gamesLink.textContent = "Play A Game";
+    gamesItem.appendChild(gamesLink);
+
+    navigation.appendChild(sessionLogItem);
+    navigation.appendChild(gamesItem);
     container.appendChild(navigation);
 
     const categoriesLink = navigation.querySelector("a[href='#categories']");
@@ -41,15 +68,15 @@ export class ProfileComponent implements Component {
         window.location.reload();
       });
     }
-    const createProfileLink = navigation.querySelector("a[href='#create-profile']");
+    const createProfileLink = navigation.querySelector(
+      "a[href='#create-profile']"
+    );
     if (createProfileLink) {
       createProfileLink.addEventListener("click", () => {
         window.history.pushState({}, "", "#create-profile");
         window.location.reload();
       });
     }
-
-
   }
 
   async fetchProfile(profileId: number) {
