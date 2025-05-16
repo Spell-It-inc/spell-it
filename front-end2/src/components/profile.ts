@@ -28,7 +28,7 @@ export class ProfileComponent implements Component {
     const navigation = document.createElement("ul");
     navigation.className = "profile-navigation";
     navigation.innerHTML = `
-            <li><a class="btn" href="#sessions">View Sessions</a></li>
+            <li><a class="btn" href="#session-logs/${profile.profile_id}">View Sessions</a></li>
             <li><a class="btn" href="#games">Play A Game</a></li>
         `;
 
@@ -48,7 +48,7 @@ export class ProfileComponent implements Component {
         window.location.reload();
       });
     }
-    
+
 
   }
 

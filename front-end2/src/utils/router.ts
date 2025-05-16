@@ -1,5 +1,9 @@
 import type { Component } from "./types"
 
+type RouteHandler = Component | {
+  render: (container: HTMLElement, param?: string) => void;
+};
+
 export class Router {
   private routes: Map<string, Component>
   private container: HTMLElement | null
@@ -16,44 +20,45 @@ export class Router {
     })
   }
 
-  public addRoute(route: string, component: Component): void {
-    this.routes.set(route, component)
+  public addRoute(route: string, handler: RouteHandler): void {
+    this.routes.set(route, handler)
   }
 
   public hasRoute(route: string): boolean {
     return this.routes.has(route)
   }
 
-  public navigateTo(route: string): void {
-    if (route.startsWith("profile/")) {
-      this.container.innerHTML =''
-      this.renderComponent("profile");
+  public navigateTo(fullRoute: string): void {
+    const [routeName, param] = fullRoute.split("/");
 
+    const handler = this.routes.get(routeName);
+
+    if (!handler) {
+      console.error(`Route "${routeName}" not found`);
       return;
     }
-    if (!this.routes.has(route)) {
-      console.error(`Route "${route}" not found`)
-      return
-    }
 
-    // Update browser history
-    window.history.pushState({ route }, "", `#${route}`)
-    this.renderComponent(route)
+    // Update URL
+    window.history.pushState({ route: fullRoute }, "", `#${fullRoute}`);
+
+    this.renderComponent(routeName, param);
   }
 
-  private renderComponent(route: string): void {
+  private renderComponent(routeName: string, param?: string): void {
     if (!this.container) {
-      console.error("Container element not found")
-      return
+      console.error("Container element not found");
+      return;
     }
 
-    const component = this.routes.get(route)
-    if (component) {
-      // Clear the container
-      this.container.innerHTML = ""
+    const handler = this.routes.get(routeName);
+    if (!handler) return;
 
-      // Render the component
-      component.render(this.container)
+    this.container.innerHTML = "";
+
+    if (typeof handler.render === "function") {
+      handler.render(this.container, param);
+    } else {
+      handler.render(this.container);
     }
   }
 }
