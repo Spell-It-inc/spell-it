@@ -14,3 +14,4 @@ VALUES
 (5, 'Nose'), (5, 'Mouth'), (5, 'Hand'), (5, 'Foot'), (5, 'Knee')
 
 ON CONFLICT (category_id, word) DO NOTHING;
+

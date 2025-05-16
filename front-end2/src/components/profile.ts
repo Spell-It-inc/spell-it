@@ -3,6 +3,7 @@ import { Component } from "../utils/types";
 export class ProfileComponent implements Component {
   async render(container: HTMLElement): Promise<void> {
     const profileId = window.location.hash.split("/")[1];
+    sessionStorage.setItem('profile_id', profileId)
     container.innerHTML = `
         <header>
           <h1>Profile</h1>
