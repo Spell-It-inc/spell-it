@@ -249,8 +249,7 @@ select {
 
 .profile-details {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
 .profile-navigation {
@@ -448,11 +447,15 @@ button:focus {
   cursor: pointer;
   transition: all 0.3s ease-in;
   outline: none;
-  text-transform: uppercase;
-  font-size: 1rem;
   font-weight: 600;
-
+  font-size: 0.5rem;
   &:hover {
     transform: scale(1.05);
+  }
+}
+
+@container main-container (min-width: 37.5rem) {
+  .btn {
+    font-size: 1rem;
   }
 }
