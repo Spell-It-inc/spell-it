@@ -42,8 +42,53 @@ if (!window.location.hash) {
   const token = sessionStorage.getItem('token');
 
   if (!token) {
-    const signInButton = document.getElementById('google-login');
-    signInButton.innerHTML = "Login with Google";
+
+    const page = document.getElementById('main');
+    const loginSection = document.createElement('section');
+    loginSection.className = 'login-section';
+
+    const addLogo = document.createElement('img');
+    addLogo.src = './assets/spell-it-logo.png';
+    addLogo.alt = 'Google logo';
+    addLogo.className = 'logo';
+    loginSection.appendChild(addLogo);
+
+    const loginTitle = document.createElement('h1');
+    loginTitle.className = 'app-title';
+    const titleText = document.createTextNode('Spell-It');
+    loginTitle.appendChild(titleText);
+    loginSection.appendChild(loginTitle);
+
+    const welcomeMessage = document.createElement('p');
+    const message = document.createTextNode('Learn to spell, one word at a time');
+    welcomeMessage.className = 'app-tagline';
+    welcomeMessage.appendChild(message);
+    loginSection.appendChild(welcomeMessage);
+    
+    const signInButton = document.createElement('button');
+    signInButton.id = 'google-login';
+    signInButton.className = 'google-btn';
+    signInButton.type = 'button';
+
+    const googleLogo = document.createElement('img');
+    googleLogo.src = 'https://developers.google.com/identity/images/g-logo.png';
+    googleLogo.alt = 'Google logo';
+    signInButton.appendChild(googleLogo);
+
+    
+    const signInText = document.createTextNode('Sign in with Google');
+    signInButton.appendChild(signInText);
+    loginSection.appendChild(signInButton);
+
+    const backgroundImg = document.createElement('img');
+    backgroundImg.src = './assets/dinosaur.png';
+    backgroundImg.alt = 'background image';
+    backgroundImg.className = 'login-background';
+
+    loginSection.appendChild(backgroundImg);
+
+    page.appendChild(loginSection);
+
     signInButton.addEventListener('click', () => {
       const params = new URLSearchParams({
         client_id: `${window.__ENV__.GOOGLE_CLIENT_ID}.apps.googleusercontent.com`,
