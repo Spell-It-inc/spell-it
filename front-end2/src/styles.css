@@ -259,7 +259,7 @@ select {
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  margin-top: auto;
+  margin-top: 2rem;
 }
 
 
@@ -439,4 +439,23 @@ button:focus {
 
 .login-background {
   width: 100%;
+}
+
+/* General | Utilities */
+.btn {
+  background-color: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+  outline: none;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 600;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 }
