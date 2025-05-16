@@ -23,7 +23,6 @@ export class AccountController {
 
       await validateExistsInDB("accounts", "account_id", accountId, "Account");
       const profile = await AccountModel.findProfilesByAccountId(accountId);
-      console.log(profile)
 
       res.json(profile);
     } catch (error) {

@@ -6,7 +6,6 @@ dotenv.config({ path: 'local.env' });
 let _pool: Pool | null = null;
 
 export const getPool = (): Pool => {
-  console.log("Creating PostgreSQL connection pool");
   if (!_pool) {
     _pool = new Pool({
       host: "spell-it-db-instance.cuptqaxjh10z.af-south-1.rds.amazonaws.com",
@@ -15,13 +14,12 @@ export const getPool = (): Pool => {
       password: "password1234",
       database: "postgres",
       ssl: {
-        rejectUnauthorized: false, // for development
+        rejectUnauthorized: false, 
       },
     });
     // Log connection status
-    console.log("Connected Success")
     _pool.on("connect", () => {
-      console.log("Connected to PostgreSQL database");
+      console.log("Connected to the database");
     });
 
     _pool.on("error", (err) => {

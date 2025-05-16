@@ -53,7 +53,6 @@ export const verifyGoogleAuth = async (
 
     next();
   } catch (error) {
-    console.error("verifyGoogleAuth failed:", error);
     res.status(401).json({ message: "Invalid or expired token" });
   }
 };
