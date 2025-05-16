@@ -51,7 +51,7 @@ if (!window.location.hash) {
 
     const loginTitle = document.createElement('h1');
     loginTitle.className = 'login-title';
-    const titleText = document.createTextNode('Welcome to Spell-It');
+    const titleText = document.createTextNode('Spell-It');
 
     loginTitle.appendChild(titleText);
     loginSection.appendChild(loginTitle);
