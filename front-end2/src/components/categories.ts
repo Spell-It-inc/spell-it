@@ -5,9 +5,9 @@ export class CategoriesComponent implements Component {
     async render(container: HTMLElement): Promise<void> {
         container.innerHTML = `
         <h1>Please Select A Category</h1>
-        <ol class = "category-container">
+        <ul class = "categories">
         ${await generateCategories()}
-        </ol>`
+        </ul>`
 
         const categories = document.querySelectorAll('.category')
         categories.forEach((element: HTMLElement) => {
