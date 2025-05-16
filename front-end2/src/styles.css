@@ -205,7 +205,6 @@ select {
   flex: 1 1 calc(33.333% - 1rem);
   max-width: 8.75rem;
   min-width: 6.25rem;
-  aspect-ratio: 1;
   background: #d3ede4;
   border: none;
   border-radius: 0.9375rem;
@@ -247,7 +246,7 @@ select {
 @media (max-width: 48rem) {
   .profile-card {
     flex: 1 1 100%;
-    max-width: 100%;
+    max-width: 90%;
   }
 }
 
