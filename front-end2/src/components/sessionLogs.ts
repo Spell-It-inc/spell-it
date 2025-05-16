@@ -23,15 +23,10 @@ export class SessionLogsComponent implements Component {
           <div class="logs-grid" id="logs-grid"></div>
         </div>
         <div style="text-align:center; margin: 2rem 0;">
-          <button id="play-game-button" class="play-game-btn">🎯 Play Game</button>
+        <a id="play-game-button" href="#games">🎯 Play Game</a>
         </div>
       </div>
     `;
-
-    const playButton = container.querySelector("#play-game-button");
-    playButton?.addEventListener("click", () => {
-      alert("Game starting soon! 🚀");
-    });
 
     try {
       const token = sessionStorage.getItem("token");
