@@ -47,6 +47,115 @@ body {
     text-align: center;
 }
 
+/* Logo and Title Styling */
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  perspective: 1000px;
+}
+
+.logo span {
+  display: inline-block;
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin: 0 -0.1rem;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.letter-a {
+  color: var(--color-primary);
+  transform: rotateY(-15deg);
+  animation: float 3s ease-in-out infinite;
+}
+
+.letter-b {
+  color: var(--color-secondary);
+  transform: translateY(-5px);
+  animation: float 3s ease-in-out infinite 0.5s;
+}
+
+.letter-c {
+  color: var(--color-success);
+  transform: rotateY(15deg);
+  animation: float 3s ease-in-out infinite 1s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-8px) rotate(3deg);
+  }
+}
+
+.app-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--color-success);
+  margin: 0.5rem 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.app-title::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 3px;
+  background: linear-gradient(to right, var(--color-secondary), var(--color-primary));
+  border-radius: 2px;
+}
+
+.app-tagline {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-style: italic;
+  margin-top: 0.5rem;
+  opacity: 0.8;
+}
+
+/* Login Button Styling */
+.login-button {
+  background-color: var(--color-primary);
+  color: var(--text-on-primary);
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  width: auto;
+  min-width: 200px;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.login-button:hover {
+  background-color: #d68c3a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.login-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 header {
   margin-bottom: 1rem;
 }
