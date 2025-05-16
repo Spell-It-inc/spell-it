@@ -486,6 +486,7 @@ button:focus {
   align-items: center;
   transition: background-color 0.2s;
   box-shadow: 0 2px 4px var(--shadow);
+  opacity: 0.5;
 }
 
 .back-button:hover {
