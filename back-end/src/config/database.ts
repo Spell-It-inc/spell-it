@@ -17,14 +17,6 @@ export const getPool = (): Pool => {
         rejectUnauthorized: false, 
       },
     });
-    // Log connection status
-    _pool.on("connect", () => {
-      console.log("Connected to the database");
-    });
-
-    _pool.on("error", (err) => {
-      console.error("Unexpected error on idle client", err);
-    });
   }
   return _pool;
 };

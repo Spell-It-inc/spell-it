@@ -20,7 +20,7 @@ export class ProfileComponent implements Component {
       const month = joinedDate.toLocaleString("en-US", { month: "long" });
       const year = joinedDate.getFullYear();
       profileElement.innerHTML = `
-                <h3>${profile.username}</h3>
+                <p>Username: <strong>${profile.username}</strong></p>
                 <p>Joined <strong>${month} ${year}</strong></p>
                 `;
     }
