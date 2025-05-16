@@ -6,18 +6,28 @@
 
 :root {
   /* Base UI Colors */
-  --color-base: #fbf5f2; /* Light neutral background */
-  --color-primary: #eb9f4a; /* Warm orange (primary action) */
-  --color-secondary: #72bfc7; /* Cool blue/teal (secondary elements) */
-  --color-accent: #ef3349; /* Bold red (for emphasis or alerts) */
-  --color-success: #4aa378; /* Positive green (success states) */
-  --shadow: #1a1a1a1a; /* Soft shadow for depth */
+  --color-base: #fbf5f2;
+  /* Light neutral background */
+  --color-primary: #eb9f4a;
+  /* Warm orange (primary action) */
+  --color-secondary: #72bfc7;
+  /* Cool blue/teal (secondary elements) */
+  --color-accent: #ef3349;
+  /* Bold red (for emphasis or alerts) */
+  --color-success: #4aa378;
+  /* Positive green (success states) */
+  --shadow: #1a1a1a1a;
+  /* Soft shadow for depth */
 
   /* Typography Colors */
-  --text-primary: #1b1b1b; /* Main text (very dark gray/black) */
-  --text-secondary: #3a3a3a; /* Supporting text (dark gray) */
-  --text-muted: #9e9e9e; /* Muted/inactive text (medium gray) */
-  --text-on-primary: #ffffff; /* Text on primary background (white) */
+  --text-primary: #1b1b1b;
+  /* Main text (very dark gray/black) */
+  --text-secondary: #3a3a3a;
+  /* Supporting text (dark gray) */
+  --text-muted: #9e9e9e;
+  /* Muted/inactive text (medium gray) */
+  --text-on-primary: #ffffff;
+  /* Text on primary background (white) */
 }
 
 html {
@@ -186,6 +196,137 @@ select {
   align-items: center;
   gap: 0.5rem;
   margin-top: auto;
+}
+
+
+button {
+  background-color: #b0d6c9;
+  border-radius: 25px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  width: 45%;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: 0.5s;
+}
+
+button:hover,
+button:focus {
+  background-color: #4b8a79;
+}
+
+
+.letter-container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: #e8eaf6;
+  border-radius: 10px
+}
+
+.letter {
+  background-color: #a0cdc1;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin: 0.1rem;
+  transition: 0.5s;
+}
+
+.space {
+  opacity: 0.3;
+}
+
+.moveable {
+  background-color: orange;
+}
+
+.moveable:hover {
+  opacity: 0.5;
+}
+
+.category-container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: #e8eaf6;
+  border-radius: 10px
+}
+
+.category {
+  background-color: orange;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin: 0.1rem;
+  transition: 0.2s;
+  opacity: 0.5;
+}
+
+.category:hover {
+  opacity: 1;
+}
+
+/* Spinner animation */
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 10px auto;
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #ff6f61;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Fun log card style */
+.log-entry {
+  background-color: #fff8dc;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin: 12px 0;
+  transition: transform 0.2s ease;
+}
+
+.log-entry:hover {
+  transform: scale(1.02);
+}
+
+.log-entry h3 {
+  margin-top: 0;
+  color: #ff6f61;
+}
+
+.logs-container {
+  padding: 10px;
 }
 
 /* Google Sign In */

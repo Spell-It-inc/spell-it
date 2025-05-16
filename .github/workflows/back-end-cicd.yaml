@@ -26,5 +26,5 @@ jobs:
         echo "${{ vars.BACK_ENVIRONMENT_VARIABLES }}" > back-end/local.env
     - name: deploy
       run: |
-        scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" back-end ec2-user@ec2-13-246-9-87.af-south-1.compute.amazonaws.com:~/
-        ssh -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" ec2-user@ec2-13-246-9-87.af-south-1.compute.amazonaws.com "cd back-end; npm i; npm run build; npm stop; npm start"
+        scp -r -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" back-end ec2-user@ec2-13-245-87-217.af-south-1.compute.amazonaws.com:~/
+        ssh -o StrictHostKeyChecking=no -i "~/.ssh/id_rsa" ec2-user@ec2-13-245-87-217.af-south-1.compute.amazonaws.com "cd back-end; npm i; npm run build; npm stop; npm start"

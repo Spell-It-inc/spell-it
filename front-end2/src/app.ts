@@ -1,11 +1,23 @@
 import { Router } from "./utils/router.js";
 import { ProfilesComponent } from "./components/profiles.js";
 import { ProfileComponent } from "./components/profile.js";
+import { GameComponent } from "./components/game.js";
+import { CategoriesComponent } from "./components/categories.js";
+import { HomeComponent } from "./components/home.js";
+import { SessionLogsComponent } from "./components/sessionLogs.js";
 
-const router = new Router('main');
+const router = new Router('main')
 const profilesComponent = new ProfilesComponent(router);
 
-router.addRoute('profiles', profilesComponent);
+router.addRoute('games', new CategoriesComponent)
+router.addRoute('game', new GameComponent)
+router.addRoute('home', new HomeComponent());
+router.addRoute("session-logs", {
+  render: (container: HTMLElement, param?: string) => {
+    new SessionLogsComponent().render(container, param);
+  }
+});
+router.addRoute('profiles', new ProfilesComponent(router));
 router.addRoute('profile', new ProfileComponent());
 router.addRoute('create-profile', {
   render: (container: HTMLElement) => profilesComponent.renderCreateProfileForm(container)
@@ -17,7 +29,9 @@ if (!window.location.hash) {
   if (params.get('code')) {
     const response = await fetch(`${window.__ENV__.API_BASE_URL}api/auth/signin`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ code: params.get('code') })
     });
 

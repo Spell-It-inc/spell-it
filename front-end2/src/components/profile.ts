@@ -3,6 +3,7 @@ import { Component } from "../utils/types";
 export class ProfileComponent implements Component {
   async render(container: HTMLElement): Promise<void> {
     const profileId = window.location.hash.split("/")[1];
+    sessionStorage.setItem('profile_id', profileId)
     container.innerHTML = `
         <header>
           <h1>Profile</h1>
@@ -27,7 +28,7 @@ export class ProfileComponent implements Component {
     const navigation = document.createElement("ul");
     navigation.className = "profile-navigation";
     navigation.innerHTML = `
-            <li><a class="btn" href="#sessions">View Sessions</a></li>
+            <li><a class="btn" href="#session-logs/${profile.profile_id}">View Sessions</a></li>
             <li><a class="btn" href="#games">Play A Game</a></li>
         `;
 
@@ -47,7 +48,7 @@ export class ProfileComponent implements Component {
         window.location.reload();
       });
     }
-    
+
 
   }
 
