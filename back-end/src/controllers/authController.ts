@@ -29,9 +29,7 @@ export class AuthController {
       if (userInfo.sub) {
         let account = await AccountModel.findByAuthSub(userInfo.sub);
         if (!account) {
-          console.log("Creating new account...");
           account = await AccountModel.create(userInfo.sub);
-          console.log("Account created:", account);
         }
         res.status(200).json({ data })
       }
@@ -43,7 +41,6 @@ export class AuthController {
 
   static async getTokenInfo(req: Request, res: Response): Promise<void> {
     const token = req.body
-    console.log(token)
     try {
       res.status(200).json(decodeJwt(token.token))
     } catch (err) {
